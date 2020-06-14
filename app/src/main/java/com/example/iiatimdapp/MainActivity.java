@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-
         models = new ArrayList<>();
         models.add(new Model(R.drawable.broccoli, "brocoli", "  "));
         models.add(new Model(R.drawable.broccoli, "brocoli", "  "));
