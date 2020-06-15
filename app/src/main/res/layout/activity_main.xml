@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             app:itemBackground="@color/colorPrimaryDark"
             app:itemTextColor="@drawable/selector_bottombar_text"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
