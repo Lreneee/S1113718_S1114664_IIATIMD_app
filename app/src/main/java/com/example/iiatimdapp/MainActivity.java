@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick (View v){
-                Intent myIntent = new Intent(MainActivity.this, MakeMoestuinActivity.class);
+                Intent myIntent = new Intent(MainActivity.this, ChooseSeedsActivity.class);
                 MainActivity.this.startActivity(myIntent);
             }
         });
