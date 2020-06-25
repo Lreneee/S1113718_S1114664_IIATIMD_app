@@ -1,9 +1,19 @@
 package com.example.iiatimdapp;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Model {
+
+    @PrimaryKey
     private int image;
+    @ColumnInfo
     private String title;
+    @ColumnInfo
     private String desc;
+
 
     public Model(int image, String title, String desc) {
         this.image = image;
