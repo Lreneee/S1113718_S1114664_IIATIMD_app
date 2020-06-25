@@ -6,6 +6,7 @@
 
     <string name="title_afmeting">Kies afmeting</string>
     <string name="register"><u>Nog geen account? Registreer hier.</u></string>
-
-
+    <string name="settings_plants"><b>Moestuinen</b></string>
+    <string name="name_moestuin"><b>Moestuin Irene</b></string>
+    <string name="bedekking_moestuin"><b>Bedekking 5/9</b></string>
 </resources>
