@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class CardAdapter extends PagerAdapter {
@@ -17,7 +19,6 @@ public class CardAdapter extends PagerAdapter {
     private List<Model> models;
     private LayoutInflater layoutInflater;
     private Context context;
-
 
     @Override
     public int getCount() {
@@ -40,14 +41,15 @@ public class CardAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.item, container, false);
-        ImageView imageView;
-        TextView title, desc;
+        ImageView image;
+        TextView title;
+        TextView desc;
 
-        imageView = view.findViewById(R.id.image);
+        image = view.findViewById(R.id.image);
         title= view.findViewById(R.id.title);
         desc = view. findViewById(R.id.desc);
 
-        imageView.setImageResource(models.get(position).getImage());
+        image.setImageResource(models.get(position).getImage());
         title.setText(models.get(position).getTitle());
         desc.setText(models.get(position).getDesc());
 

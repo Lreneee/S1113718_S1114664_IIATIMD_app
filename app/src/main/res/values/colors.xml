@@ -4,6 +4,8 @@
     <color name="ColorPrim">#3E6B4E</color>
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorAccent">#63AB7C</color>
+    <color name="colorGrey">#D9DDDC</color>
+    <color name="colorLightBrown">#8F725D</color>
     <color name="color1">#424549</color>
     <color name="color2">#7e455e</color>
     <color name="color3">#796e25</color>
