@@ -1,15 +1,13 @@
 package com.example.iiatimdapp;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class SearchSeedsActivity extends AppCompatActivity {
+public class ChooseSeedsActivity extends AppCompatActivity {
 
     RecyclerView recyclerViewSeed;
 
@@ -26,6 +24,8 @@ public class SearchSeedsActivity extends AppCompatActivity {
 
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,18 +35,10 @@ public class SearchSeedsActivity extends AppCompatActivity {
         title = getResources().getStringArray(R.array.searchSeeds_item);
         desc = getResources().getStringArray(R.array.searchSeeds_desc);
 
-        SearchSeedsAdapter seedsAdapter = new SearchSeedsAdapter(this, title, desc, images);
+        ChooseSeedsAdapter seedsAdapter = new ChooseSeedsAdapter(this, title, desc, images);
         recyclerViewSeed.setAdapter(seedsAdapter);
         recyclerViewSeed.setLayoutManager(new LinearLayoutManager(this));
 
-        Button btngotochoose = (Button) findViewById(R.id.btngotochoose);
-        btngotochoose.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick (View v){
-                Intent myIntent = new Intent(SearchSeedsActivity.this, ChooseSeedsActivity.class);
-                SearchSeedsActivity.this.startActivity(myIntent);
-            }
-        });
     }
 }
+
