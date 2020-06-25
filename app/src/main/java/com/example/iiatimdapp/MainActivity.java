@@ -7,9 +7,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -71,11 +73,12 @@ public class MainActivity extends AppCompatActivity {
 
         RequestQueue queue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "https://pokeapi.co/api/v2/pokemon/1", null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://192.168.2.9:8000/api/moestuin_maten/get", null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    Log.d("gelukt", response.get("name").toString());
+
+                    Log.d("gelukt", response.getString("0"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -83,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("gefaald", error.getMessage());
+                Log.d("gefaald", error.toString());
+
             }
         });
 
@@ -101,6 +105,4 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
     }
-
-
 }
