@@ -7,11 +7,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.iiatimdapp.Room.MoestuinMaten;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.google.gson.Gson;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,10 +32,14 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.viewpager.widget.ViewPager;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +73,35 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
+
+        RequestQueue queue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://192.168.2.1:8000/api/moestuin_maten/get", null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    for(int i=0; i<response.length(); i++){
+                        String moestuinResponse = response.get(Integer.toString(i)).toString();
+
+                        MoestuinMaten moestuinMaat = gson.fromJson(moestuinResponse, MoestuinMaten.class);
+
+                        Log.d("maten", moestuinMaat.toString());
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("gefaald", error.toString());
+
+            }
+        });
+
+        VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
+
 //        Button btnAdd = (Button) findViewById(R.id.btnAdd);
 //
 //        btnAdd.setOnClickListener(new View.OnClickListener(){
@@ -70,7 +114,4 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
     }
-
-
-
 }

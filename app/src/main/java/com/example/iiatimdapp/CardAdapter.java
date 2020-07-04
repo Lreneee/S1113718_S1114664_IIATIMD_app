@@ -10,13 +10,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
-import org.w3c.dom.Text;
+import com.example.iiatimdapp.Room.Moestuin;
 
 import java.util.List;
 
 public class CardAdapter extends PagerAdapter {
 
-    private List<Model> models;
+    private List<Moestuin> models;
     private LayoutInflater layoutInflater;
     private Context context;
 
@@ -26,7 +26,7 @@ public class CardAdapter extends PagerAdapter {
 
     }
 
-    public CardAdapter(List<Model> models, Context context) {
+    public CardAdapter(List<Moestuin> models, Context context) {
         this.models = models;
         this.context = context;
     }
