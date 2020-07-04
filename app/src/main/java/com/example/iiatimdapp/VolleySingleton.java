@@ -2,6 +2,8 @@ package com.example.iiatimdapp;
 
 import android.content.Context;
 
+import androidx.room.Room;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -10,10 +12,13 @@ public class VolleySingleton {
     private static VolleySingleton instance;
     private RequestQueue requestQueue;
     private static Context ctx;
+    private AppDatabase appDatabase;
 
     private VolleySingleton(Context context){
         ctx = context;
         requestQueue = getRequestQueue();
+
+        appDatabase = Room.databaseBuilder(ctx, AppDatabase.class, "alldata").build();
     }
     public static synchronized VolleySingleton getInstance(Context context){
         if(instance == null){
@@ -26,6 +31,9 @@ public class VolleySingleton {
             requestQueue = Volley.newRequestQueue(ctx.getApplicationContext());
         }
         return requestQueue;
+    }
+    public AppDatabase getAppDatabase() {
+        return appDatabase;
     }
     public <T> void addToRequestQueue(Request<T> req){
         getRequestQueue().add(req);

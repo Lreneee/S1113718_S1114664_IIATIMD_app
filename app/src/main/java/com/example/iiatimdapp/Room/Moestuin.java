@@ -1,11 +1,11 @@
-package com.example.iiatimdapp;
+package com.example.iiatimdapp.Room;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class Model {
+public class Moestuin {
 
     @PrimaryKey
     private int image;
@@ -15,7 +15,7 @@ public class Model {
     private String desc;
 
 
-    public Model(int image, String title, String desc) {
+    public Moestuin(int image, String title, String desc) {
         this.image = image;
         this.title = title;
         this.desc = desc;
