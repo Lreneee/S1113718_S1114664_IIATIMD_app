@@ -1,11 +1,21 @@
-package com.example.iiatimdapp;
+package com.example.iiatimdapp.Room;
 
-public class Model {
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
+public class Moestuin {
+
+    @PrimaryKey
     private int image;
+    @ColumnInfo
     private String title;
+    @ColumnInfo
     private String desc;
 
-    public Model(int image, String title, String desc) {
+
+    public Moestuin(int image, String title, String desc) {
         this.image = image;
         this.title = title;
         this.desc = desc;
@@ -20,7 +30,7 @@ public class Model {
     }
 
     public String getTitle() {
-        return title;
+        return this.title;
     }
 
     public void setTitle(String title) {

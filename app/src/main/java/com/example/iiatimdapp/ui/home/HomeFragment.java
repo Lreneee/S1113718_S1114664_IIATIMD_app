@@ -1,13 +1,10 @@
 package com.example.iiatimdapp.ui.home;
 
 import android.animation.ArgbEvaluator;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,9 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.iiatimdapp.CardAdapter;
-import com.example.iiatimdapp.ChooseSeedsActivity;
-import com.example.iiatimdapp.MainActivity;
-import com.example.iiatimdapp.Model;
+import com.example.iiatimdapp.Room.Moestuin;
 import com.example.iiatimdapp.R;
 
 import java.util.ArrayList;
@@ -31,7 +26,7 @@ public class HomeFragment extends Fragment {
 
     ViewPager viewPager;
     CardAdapter adapter;
-    List<Model> models;
+    List<Moestuin> models;
     Integer[] colors = null;
     ArgbEvaluator argbEvaluator = new ArgbEvaluator();
 
@@ -55,10 +50,10 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         models = new ArrayList<>();
-        models.add(new Model(R.drawable.broccoli, "brocoli", "  "));
-        models.add(new Model(R.drawable.broccoli, "brocoli", "  "));
-        models.add(new Model(R.drawable.broccoli, "brocoli", "  "));
-        models.add(new Model(R.drawable.broccoli, "brocoli", "  "));
+        models.add(new Moestuin(R.drawable.broccoli, "brocoli", "  "));
+        models.add(new Moestuin(R.drawable.broccoli, "brocoli", "  "));
+        models.add(new Moestuin(R.drawable.broccoli, "brocoli", "  "));
+        models.add(new Moestuin(R.drawable.broccoli, "brocoli", "  "));
 
         adapter = new CardAdapter(models, getActivity());
         viewPager = getView().findViewById(R.id.cardViewPager);

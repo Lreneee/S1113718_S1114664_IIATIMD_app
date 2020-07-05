@@ -22,7 +22,7 @@
         android:layout_marginTop="60dp"
         android:layout_marginRight="257dp"
         android:layout_marginBottom="28dp"
-        android:textColor="@color/colorBrown"
+        android:textColor="@color/colorLightBrown"
         android:text="Welkom bij de moestuin app"
         android:textSize="40dp"
         />
@@ -43,7 +43,7 @@
         android:layout_marginRight="-12dp"
         android:layout_marginBottom="28dp"
         android:text="Inloggen"
-        android:textColor="@color/colorBrown"
+        android:textColor="@color/colorLightBrown"
         android:textSize="24dp" />
 
     <EditText
