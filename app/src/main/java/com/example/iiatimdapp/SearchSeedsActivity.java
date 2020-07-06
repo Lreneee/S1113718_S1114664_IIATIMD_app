@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.iiatimdapp.Room.Zaadjes;
+
 public class SearchSeedsActivity extends AppCompatActivity {
 
     RecyclerView recyclerViewSeed;
@@ -25,19 +27,17 @@ public class SearchSeedsActivity extends AppCompatActivity {
     };
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchseeds);
 
+        VolleySingleton.getInstance(this).getZaadjes();
+
         recyclerViewSeed = findViewById(R.id.searchSeeds_recyclerview);
         title = getResources().getStringArray(R.array.searchSeeds_item);
         desc = getResources().getStringArray(R.array.searchSeeds_desc);
 
-        SearchSeedsAdapter seedsAdapter = new SearchSeedsAdapter(this, title, desc, images);
-        recyclerViewSeed.setAdapter(seedsAdapter);
-        recyclerViewSeed.setLayoutManager(new LinearLayoutManager(this));
 
         Button btngotochoose = (Button) findViewById(R.id.btngotochoose);
         btngotochoose.setOnClickListener(new View.OnClickListener(){

@@ -13,13 +13,17 @@ import android.widget.ArrayAdapter;
 import android.widget.AdapterView.OnItemSelectedListener;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.iiatimdapp.Room.MoestuinMaten;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MakeMoestuinActivity  extends AppCompatActivity {
 
     String name;
     EditText nameInput;
+    Spinner spinnerMoestuinMaten;
 
 
     @Override
@@ -40,19 +44,17 @@ public class MakeMoestuinActivity  extends AppCompatActivity {
         staticSpinner.setAdapter(staticAdapter);
 
 
-
-
-
-
         //Make your own 'Moestuin
+        spinnerMoestuinMaten = (Spinner) findViewById(R.id.static_spinner);
         nameInput= (EditText) findViewById(R.id.nameInput);
-        Button btnmakemoestuin = (Button) findViewById(R.id.btnmakemoestuin);
-
-        btnmakemoestuin.setOnClickListener(new View.OnClickListener(){
+        Button btnCreateMoestuin = (Button) findViewById(R.id.btnCreateMoestuin);
+        final VolleySingleton volleySingleton = new VolleySingleton(this);
+        btnCreateMoestuin.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick (View v){
                 name = nameInput.getText().toString();
+                volleySingleton.addMoestuinToDatabase(name, 1);
                 Intent myIntent = new Intent(MakeMoestuinActivity.this, SearchSeedsActivity.class);
                 MakeMoestuinActivity.this.startActivity(myIntent);
             }

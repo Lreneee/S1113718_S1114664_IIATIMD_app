@@ -27,6 +27,8 @@
         </activity>
         <activity android:name=".ChooseSeedsActivity">
         </activity>
+        <activity android:name=".HomeActivity">
+        </activity>
         <service
             android:name=".MessagingService"
             android:exported="false">

@@ -1,10 +1,12 @@
 package com.example.iiatimdapp.ui.home;
 
 import android.animation.ArgbEvaluator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +16,8 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.iiatimdapp.CardAdapter;
+import com.example.iiatimdapp.MainActivity;
+import com.example.iiatimdapp.MakeMoestuinActivity;
 import com.example.iiatimdapp.Room.Moestuin;
 import com.example.iiatimdapp.R;
 
@@ -47,6 +51,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
 
         models = new ArrayList<>();
@@ -55,10 +60,11 @@ public class HomeFragment extends Fragment {
         models.add(new Moestuin(R.drawable.broccoli, "brocoli", "  "));
         models.add(new Moestuin(R.drawable.broccoli, "brocoli", "  "));
 
+
         adapter = new CardAdapter(models, getActivity());
         viewPager = getView().findViewById(R.id.cardViewPager);
         viewPager.setAdapter(adapter);
-        viewPager.setPadding(130, 0, 130, 0);
+        viewPager.setPadding(0, 0, 180, 0);
 
         Integer[] colors_temp = {
                 getResources().getColor(R.color.color1),
@@ -66,6 +72,16 @@ public class HomeFragment extends Fragment {
                 getResources().getColor(R.color.color3),
                 getResources().getColor(R.color.color4)
         };
+
+        Button button= getView().findViewById(R.id.btnAdd);
+        button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), MakeMoestuinActivity.class);
+                startActivity(i);
+            }
+        });
 
         colors = colors_temp;
 
