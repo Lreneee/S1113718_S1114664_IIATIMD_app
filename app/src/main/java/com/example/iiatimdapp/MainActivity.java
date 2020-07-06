@@ -37,6 +37,27 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
+        final Response.Listener<String> loginResponse = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject json = new JSONObject(response);
+
+                    String accessToken = json.getString("access_token");
+                    String refreshToken = json.getString("refresh_token");
+                    Token token = new Token(accessToken, refreshToken);
+                    AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+                    new Thread(new HandleTokenTask(db, token)).start();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                Intent myIntent = new Intent(MainActivity.this, HomeActivity.class);
+                MainActivity.this.startActivity(myIntent);
+            }
+        };
+
         Button btnLogin = (Button) findViewById(R.id.btnLogin);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -44,9 +65,26 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                RequestQueue queue = VolleySingleton.getInstance(getApplicationContext()).getRequestQueue();
-                String url = "http://192.168.1.112:8000/oauth/token";
+                final EditText usernameField = (EditText) findViewById(R.id.userName);
+                final String username = usernameField.getText().toString();
+                final EditText passwordField = (EditText) findViewById(R.id.password);
+                final String password = passwordField.getText().toString();
 
+                if (username.length() > 0 && password.length() > 0) {
+                    APIManager.getInstance(getApplicationContext()).loginRequest(username, password,loginResponse);
+                }
+
+            }
+        });
+
+        Button btnRegister = (Button) findViewById(R.id.btnRegister);
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Log.d("MainActivity", "Button clicked");
                 final EditText usernameField = (EditText) findViewById(R.id.userName);
                 final String username = usernameField.getText().toString();
                 final EditText passwordField = (EditText) findViewById(R.id.password);
@@ -54,32 +92,15 @@ public class MainActivity extends AppCompatActivity {
 
                 if (username.length() > 0 && password.length() > 0) {
 
-                    StringRequest stringRequest = APIManager.getInstance(getApplicationContext()).loginRequest(username, password,
+                    APIManager.getInstance(getApplicationContext()).registerRequest(username, password,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    try {
-                                        JSONObject json = new JSONObject(response);
-
-                                        String accessToken = json.getString("access_token");
-                                        String refreshToken = json.getString("refresh_token");
-                                        Token token = new Token(accessToken, refreshToken);
-                                        AppDatabase db = AppDatabase.getInstance(getApplicationContext());
-                                        new Thread(new HandleTokenTask(db, token)).start();
-
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-
-                                    Intent myIntent = new Intent(MainActivity.this, HomeActivity.class);
-                                    MainActivity.this.startActivity(myIntent);
+                                    Log.d("MainActivity", "response");
+                                    APIManager.getInstance(getApplicationContext()).loginRequest(username, password, loginResponse);
                                 }
                             });
-
-                    // Add the request to the RequestQueue.
-                    queue.add(stringRequest);
                 }
-
             }
         });
 
