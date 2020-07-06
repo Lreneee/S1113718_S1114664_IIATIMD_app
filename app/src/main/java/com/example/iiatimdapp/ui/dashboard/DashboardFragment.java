@@ -35,15 +35,6 @@ public class DashboardFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
 
     private ArrayList<Zaadjes> zaadjes;
-    int images[]= {
-            R.drawable.broccoli,
-            R.drawable.broccoli,
-            R.drawable.broccoli,
-            R.drawable.broccoli,
-            R.drawable.broccoli,
-            R.drawable.broccoli,
-            R.drawable.broccoli,
-    };
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -61,7 +52,7 @@ public class DashboardFragment extends Fragment {
         ArrayList<Zaadjes> zaadjes = MainActivity.zaadjes;
 
        Log.d("zaad", zaadjes.toString());
-        recyclerViewAdapter = new SearchSeedsAdapter(zaadjes, images);
+        recyclerViewAdapter = new SearchSeedsAdapter(zaadjes);
         recyclerView.setAdapter(recyclerViewAdapter);
 
         return root;

@@ -19,14 +19,13 @@
             android:layout_height="115dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginEnd="10dp">
 
 
             <ImageView
                 android:id="@+id/search_seed_img"
-                android:layout_width="109dp"
-                android:layout_height="93dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_margin="5dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
@@ -44,8 +43,9 @@
                 android:layout_marginStart="28dp"
                 android:layout_marginLeft="28dp"
                 android:layout_marginTop="4dp"
+                android:textFontWeight="@android:integer/config_mediumAnimTime"
                 android:text="Title"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 app:layout_constraintStart_toEndOf="@+id/search_seed_img"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_editor_absoluteX="95dp"
@@ -53,12 +53,16 @@
 
             <TextView
                 android:id="@+id/seed_desc_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="207dp"
+                android:layout_height="63dp"
                 android:text="Description"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/seed_title_txt"
-                app:layout_constraintTop_toBottomOf="@+id/seed_title_txt"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.718"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.692"
                 app:layout_editor_absoluteX="95dp"
                 app:layout_editor_absoluteY="16dp" />
 

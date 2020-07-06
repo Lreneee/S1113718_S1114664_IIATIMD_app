@@ -35,8 +35,6 @@ public class SearchSeedsActivity extends AppCompatActivity {
         VolleySingleton.getInstance(this).getZaadjes();
 
         recyclerViewSeed = findViewById(R.id.searchSeeds_recyclerview);
-        title = getResources().getStringArray(R.array.searchSeeds_item);
-        desc = getResources().getStringArray(R.array.searchSeeds_desc);
 
 
         Button btngotochoose = (Button) findViewById(R.id.btngotochoose);

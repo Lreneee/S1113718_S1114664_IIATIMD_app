@@ -30,6 +30,7 @@ public class HomeFragment extends Fragment {
 
     ViewPager viewPager;
     CardAdapter adapter;
+    ArrayList<Moestuin> moestuinen = new ArrayList<>(); 
     List<Moestuin> models;
     Integer[] colors = null;
     ArgbEvaluator argbEvaluator = new ArgbEvaluator();
@@ -55,23 +56,14 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         models = new ArrayList<>();
-        models.add(new Moestuin(R.drawable.broccoli, "brocoli", "  "));
-        models.add(new Moestuin(R.drawable.broccoli, "brocoli", "  "));
-        models.add(new Moestuin(R.drawable.broccoli, "brocoli", "  "));
-        models.add(new Moestuin(R.drawable.broccoli, "brocoli", "  "));
 
 
         adapter = new CardAdapter(models, getActivity());
         viewPager = getView().findViewById(R.id.cardViewPager);
         viewPager.setAdapter(adapter);
-        viewPager.setPadding(0, 0, 180, 0);
+        viewPager.setPadding(0, 0, 410, 0);
+        viewPager.setBackgroundColor(getResources().getColor(R.color.lightGrey));
 
-        Integer[] colors_temp = {
-                getResources().getColor(R.color.color1),
-                getResources().getColor(R.color.color2),
-                getResources().getColor(R.color.color3),
-                getResources().getColor(R.color.color4)
-        };
 
         Button button= getView().findViewById(R.id.btnAdd);
         button.setOnClickListener(new View.OnClickListener() {
@@ -83,17 +75,10 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        colors = colors_temp;
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position < (adapter.getCount() - 1) && position < (colors.length - 1)) {
-                    viewPager.setBackgroundColor((Integer) argbEvaluator.evaluate(positionOffset, colors[position], colors[position + 1]));
-
-                } else {
-                    viewPager.setBackgroundColor(colors[colors.length - 1]);
-                }
             }
 
             @Override

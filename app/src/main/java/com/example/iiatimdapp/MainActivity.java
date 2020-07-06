@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.iiatimdapp.Room.Moestuin;
 import com.example.iiatimdapp.Room.MoestuinMaten;
 import com.example.iiatimdapp.Room.Zaadjes;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -43,6 +44,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "APIcall";
     public static ArrayList<Zaadjes> zaadjes;
+    public static ArrayList<Moestuin> moestuinen;
 
 
     @Override
@@ -61,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
         zaadjes = VolleySingleton.getInstance(this).getZaadjes();
+
+        moestuinen = VolleySingleton.getInstance(this).getPersonalMoestuinen();
+        Log.d("ballba", moestuinen.toString());
 
 //        setContentView(R.layout.activity_login);
 //
