@@ -47,14 +47,14 @@ public class MainActivity extends AppCompatActivity {
                 RequestQueue queue = VolleySingleton.getInstance(getApplicationContext()).getRequestQueue();
                 String url = "http://192.168.1.112:8000/oauth/token";
 
-                final EditText usernameField = (EditText)findViewById(R.id.userName);
+                final EditText usernameField = (EditText) findViewById(R.id.userName);
                 final String username = usernameField.getText().toString();
-                final EditText passwordField = (EditText)findViewById(R.id.password);
+                final EditText passwordField = (EditText) findViewById(R.id.password);
                 final String password = passwordField.getText().toString();
 
                 if (username.length() > 0 && password.length() > 0) {
 
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                    StringRequest stringRequest = APIManager.getInstance(getApplicationContext()).loginRequest(username, password,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
@@ -71,34 +71,10 @@ public class MainActivity extends AppCompatActivity {
                                         e.printStackTrace();
                                     }
 
-
                                     Intent myIntent = new Intent(MainActivity.this, HomeActivity.class);
                                     MainActivity.this.startActivity(myIntent);
                                 }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    if (error.getMessage() != null) {
-                                        Log.e(TAG, error.getMessage());
-                                        error.printStackTrace();
-                                    }
-                                }
-                            }) {
-                        @Override
-                        protected Map<String, String> getParams() {
-                            Map<String, String> params = new HashMap<>();
-
-                            params.put("username",username);
-                            params.put( "password",password);
-                            params.put("grant_type","password");
-                            params.put("client_id","3");
-                            params.put("client_secret","yXOCotIGpTvgLc7vIHCZuC2mWJ8nIKkEa1Aosmg8");
-                            params.put("scope","");
-
-                            return params;
-                        }
-                    };
+                            });
 
                     // Add the request to the RequestQueue.
                     queue.add(stringRequest);
