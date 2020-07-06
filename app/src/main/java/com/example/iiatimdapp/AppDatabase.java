@@ -8,15 +8,19 @@ import androidx.room.RoomDatabase;
 
 import com.example.iiatimdapp.Room.Moestuin;
 import com.example.iiatimdapp.Room.MoestuinMaten;
+import com.example.iiatimdapp.Room.Token;
+import com.example.iiatimdapp.Room.TokenDAO;
 import com.example.iiatimdapp.Room.moestuinDAO;
 import com.example.iiatimdapp.Room.moestuinMatenDAO;
 
-@Database(entities = {Moestuin.class, MoestuinMaten.class}, version = 1)
+@Database(entities = {Moestuin.class, MoestuinMaten.class, Token.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract moestuinDAO moestuinDAO();
 
     public abstract moestuinMatenDAO moestuinMatenDAO();
+
+    public abstract TokenDAO tokenDAO();
 
     private static AppDatabase instance;
 

@@ -16,6 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.iiatimdapp.Room.GetTokenTask;
 import com.example.iiatimdapp.Room.MoestuinMaten;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -101,6 +102,9 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
+
+        AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+        new Thread(new GetTokenTask(db)).start();
 
 //        Button btnAdd = (Button) findViewById(R.id.btnAdd);
 //
