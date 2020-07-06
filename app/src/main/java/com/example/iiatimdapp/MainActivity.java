@@ -42,6 +42,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "APIcall";
+    public static ArrayList<Zaadjes> zaadjes;
 
 
     @Override
@@ -59,9 +60,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        VolleySingleton volleySingleton = new VolleySingleton(this);
-        volleySingleton.getMoestuinMaten();
-        volleySingleton.getZaadjes();
+        zaadjes = VolleySingleton.getInstance(this).getZaadjes();
 
 //        setContentView(R.layout.activity_login);
 //

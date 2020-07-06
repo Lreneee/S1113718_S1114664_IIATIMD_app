@@ -25,6 +25,7 @@ public class Zaadjes {
         this.soort = soort;
         this.description = description;
     }
+
     public int getId() {
         return zaadjes_id;
     }
