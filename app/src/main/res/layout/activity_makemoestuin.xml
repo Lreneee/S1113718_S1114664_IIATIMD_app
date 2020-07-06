@@ -8,49 +8,53 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="80dp"
-        android:paddingTop="80dp"
+        android:layout_height="257dp"
         android:layout_marginBottom="32dp"
-        android:orientation="vertical"
         android:background="#E5E5E5"
-        >
+        android:orientation="vertical"
+        android:paddingTop="80dp"
+        android:paddingBottom="80dp">
 
 
         <ImageView
-            android:layout_width="300dp"
-            android:layout_height="150dp"
-            android:src="@drawable/moestuin_120x60"
+            android:layout_width="299dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            />
+            android:src="@drawable/moestuin_120x60" />
     </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="24dp"
-        android:text="Maak je eigen moestuin aan"
+        android:text="@string/moestuin_making"
         android:textSize="24dp"
         android:textColor="#000000"
 />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Afmetingen moestuin"
+        android:paddingLeft="24dp"
+        android:paddingTop="24dp"
+    />
     <Spinner
         android:id="@+id/static_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_width="361dp"
+        android:layout_height="55dp"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
-        android:spinnerMode="dialog"
-        android:prompt="@string/title_afmeting"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/spinner_background"
+        android:prompt="@string/title_afmeting"
+        android:spinnerMode="dialog"
 
         />
 
     <EditText
         android:id="@+id/nameInput"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_width="361dp"
+        android:layout_height="62dp"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:ems="10"
@@ -59,7 +63,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="111dp"
         android:layout_gravity="bottom"
         android:layout_weight="1">
 
@@ -67,21 +71,20 @@
             android:id="@+id/btnmakemoestuin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_gravity="bottom"
             android:layout_marginLeft="24dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="24dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/round"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:text="Maak moestuin aan"
             android:textColor="#FFFFFF"
-            android:layout_gravity="bottom"
 
 
             />
     </LinearLayout>
-
 
 
 </LinearLayout>

@@ -3,12 +3,12 @@
 
     <array name="makeMoestuin_array">
         <item>120 x 120 cm</item>
-        <item>120 x 90</item>
-        <item>120 x 60</item>
-        <item>90 x 90</item>
-        <item>90 x 60</item>
-        <item>60 x 60</item>
-        <item>930 x 30</item>
+        <item>120 x 90 cm</item>
+        <item>120 x 60 cm</item>
+        <item>90 x 90 cm</item>
+        <item>90 x 60 cm</item>
+        <item>60 x 60 cm</item>
+        <item>930 x 30 cm</item>
     </array>
 
     <array name="searchSeeds_item">

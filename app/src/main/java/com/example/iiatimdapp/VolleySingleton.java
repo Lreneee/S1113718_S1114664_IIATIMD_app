@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class VolleySingleton {
@@ -26,6 +27,7 @@ public class VolleySingleton {
     private static Context ctx;
     private AppDatabase appDatabase;
     final ArrayList<MoestuinMaten> moestuinMaten = new ArrayList<>();
+    final ArrayList<Zaadjes> zaadjes = new ArrayList<>();
     Gson gson = new Gson();
 
     public VolleySingleton(Context context){
@@ -81,6 +83,10 @@ public class VolleySingleton {
         });
         addToRequestQueue(jsonObjectRequest);
     }
+    public ArrayList<MoestuinMaten> getMoestuinMatenArraylist() {
+        return moestuinMaten;
+    }
+
     public void getZaadjes() {
         JsonObjectRequest jsonObjectRequestZaadjes = new JsonObjectRequest(Request.Method.GET, "http://192.168.2.1:8000/api/zaadjes", null, new Response.Listener<JSONObject>() {
             @Override
@@ -90,6 +96,8 @@ public class VolleySingleton {
                         String zaadjesResponse = response.get(Integer.toString(i)).toString();
 
                         Zaadjes zaadje = gson.fromJson(zaadjesResponse, Zaadjes.class);
+
+                        zaadjes.add(zaadje);
 
                         Log.d("zaadjes", zaadje.toString());
                     }
