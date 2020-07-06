@@ -64,7 +64,7 @@ public class HomeFragment extends Fragment {
         adapter = new CardAdapter(models, getActivity());
         viewPager = getView().findViewById(R.id.cardViewPager);
         viewPager.setAdapter(adapter);
-        viewPager.setPadding(130, 0, 130, 0);
+        viewPager.setPadding(0, 0, 180, 0);
 
         Integer[] colors_temp = {
                 getResources().getColor(R.color.color1),

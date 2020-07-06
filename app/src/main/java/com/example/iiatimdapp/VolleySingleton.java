@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.room.Room;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -18,8 +19,11 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class VolleySingleton {
     private static VolleySingleton instance;
@@ -30,32 +34,36 @@ public class VolleySingleton {
     final ArrayList<Zaadjes> zaadjes = new ArrayList<>();
     Gson gson = new Gson();
 
-    public VolleySingleton(Context context){
+    public VolleySingleton(Context context) {
         ctx = context;
         requestQueue = getRequestQueue();
 
         appDatabase = Room.databaseBuilder(ctx, AppDatabase.class, "alldata").build();
     }
-    public static synchronized VolleySingleton getInstance(Context context){
-        if(instance == null){
+
+    public static synchronized VolleySingleton getInstance(Context context) {
+        if (instance == null) {
             instance = new VolleySingleton(context);
         }
         return instance;
     }
-    public RequestQueue getRequestQueue(){
-        if(requestQueue == null){
+
+    public RequestQueue getRequestQueue() {
+        if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(ctx.getApplicationContext());
         }
         return requestQueue;
     }
+
     public AppDatabase getAppDatabase() {
         return appDatabase;
     }
-    public <T> void addToRequestQueue(Request<T> req){
+
+    public <T> void addToRequestQueue(Request<T> req) {
         getRequestQueue().add(req);
     }
 
-    public void  getMoestuinMaten() {
+    public void getMoestuinMaten() {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://192.168.2.1:8000/api/moestuin_maten", null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -83,6 +91,7 @@ public class VolleySingleton {
         });
         addToRequestQueue(jsonObjectRequest);
     }
+
     public ArrayList<MoestuinMaten> getMoestuinMatenArraylist() {
         return moestuinMaten;
     }
@@ -114,5 +123,52 @@ public class VolleySingleton {
             }
         });
         addToRequestQueue(jsonObjectRequestZaadjes);
+    }
+
+    public ArrayList<Zaadjes> getZaadjesArraylist() {
+        return zaadjes;
+    }
+
+    public void addMoestuinToDatabase(String naam_moestuin, int moestuin_maten) {
+        final JSONObject object = new JSONObject();
+        try {
+            object.put("naam", naam_moestuin);
+            object.put("moestuin_maten", moestuin_maten);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequestMoestuin = new JsonObjectRequest(Request.Method.POST, "http://192.168.2.1:8000/api/moestuinen/add", object,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("response", response.toString());
+                        Log.d("object_response", object.toString());
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("response", error.toString());
+                Log.d("object_response", object.toString());
+
+                String body = "";
+                String statusCode = String.valueOf(error.networkResponse.statusCode);
+                if (error.networkResponse.data != null) {
+                    try {
+                        body = new String(error.networkResponse.data, "UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Log.d("FAILURE22", body);
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json; charset=utf-8");
+                return params;
+            }
+        };
+        addToRequestQueue(jsonObjectRequestMoestuin);
     }
 }

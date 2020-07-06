@@ -41,6 +41,6 @@ public class Zaadjes {
         return description;
     }
     public String toString(){
-        return "id: " + zaadjes_id + ", name: " + name + ", soort:" + soort;
+        return "id: " + zaadjes_id + ", name: " + name + ", soort: " + soort + ", img: " + img;
     }
 }

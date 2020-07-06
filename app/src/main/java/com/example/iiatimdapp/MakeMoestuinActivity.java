@@ -47,13 +47,14 @@ public class MakeMoestuinActivity  extends AppCompatActivity {
         //Make your own 'Moestuin
         spinnerMoestuinMaten = (Spinner) findViewById(R.id.static_spinner);
         nameInput= (EditText) findViewById(R.id.nameInput);
-        Button btnmakemoestuin = (Button) findViewById(R.id.btnmakemoestuin);
-
-        btnmakemoestuin.setOnClickListener(new View.OnClickListener(){
+        Button btnCreateMoestuin = (Button) findViewById(R.id.btnCreateMoestuin);
+        final VolleySingleton volleySingleton = new VolleySingleton(this);
+        btnCreateMoestuin.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick (View v){
                 name = nameInput.getText().toString();
+                volleySingleton.addMoestuinToDatabase(name, 1);
                 Intent myIntent = new Intent(MakeMoestuinActivity.this, SearchSeedsActivity.class);
                 MakeMoestuinActivity.this.startActivity(myIntent);
             }
