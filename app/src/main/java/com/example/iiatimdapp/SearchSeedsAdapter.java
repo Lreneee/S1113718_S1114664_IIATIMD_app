@@ -13,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.iiatimdapp.Room.Zaadjes;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -52,7 +53,7 @@ public class SearchSeedsAdapter extends RecyclerView.Adapter<SearchSeedsAdapter.
     public void onBindViewHolder(@NonNull SeedsViewHolder holder, int position) {
         holder.title_txt.setText(zaadjes.get(position).getName());
         holder.desc_txt.setText(zaadjes.get(position).getDescription());
-        holder.image.setImageResource(data_img[position]);
+        Picasso.get().load(zaadjes.get(position).getImg()).resize(109, 93).centerCrop().into(holder.image);
     }
 
     @Override
