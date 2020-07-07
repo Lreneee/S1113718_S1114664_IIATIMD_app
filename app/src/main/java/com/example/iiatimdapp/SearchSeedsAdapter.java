@@ -13,17 +13,16 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.iiatimdapp.Room.Zaadjes;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class SearchSeedsAdapter extends RecyclerView.Adapter<SearchSeedsAdapter.SeedsViewHolder> {
 
     private ArrayList<Zaadjes> zaadjes;
-    int data_img[];
 
-    public SearchSeedsAdapter(ArrayList<Zaadjes> zaadjes, int images[]) {
+    public SearchSeedsAdapter(ArrayList<Zaadjes> zaadjes) {
         this.zaadjes = zaadjes;
-        this.data_img = images;
     }
 
     public class SeedsViewHolder extends RecyclerView.ViewHolder {
@@ -52,12 +51,12 @@ public class SearchSeedsAdapter extends RecyclerView.Adapter<SearchSeedsAdapter.
     public void onBindViewHolder(@NonNull SeedsViewHolder holder, int position) {
         holder.title_txt.setText(zaadjes.get(position).getName());
         holder.desc_txt.setText(zaadjes.get(position).getDescription());
-        holder.image.setImageResource(data_img[position]);
+        Picasso.get().load(zaadjes.get(position).getImg()).resize(100, 100).centerCrop().transform(new CircleTransform()).into(holder.image);
     }
 
     @Override
     public int getItemCount() {
-        return data_img.length;
+       return zaadjes.size();
     }
 
 }

@@ -32,8 +32,6 @@ public class ChooseSeedsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_searchseeds);
 
         recyclerViewSeed = findViewById(R.id.searchSeeds_recyclerview);
-        title = getResources().getStringArray(R.array.searchSeeds_item);
-        desc = getResources().getStringArray(R.array.searchSeeds_desc);
 
         ChooseSeedsAdapter seedsAdapter = new ChooseSeedsAdapter(this, title, desc, images);
         recyclerViewSeed.setAdapter(seedsAdapter);

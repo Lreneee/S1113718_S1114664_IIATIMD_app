@@ -8,40 +8,54 @@ import androidx.room.PrimaryKey;
 public class Moestuin {
 
     @PrimaryKey
-    private int image;
+    private int moestuin_id;
     @ColumnInfo
-    private String title;
+    private String img;
     @ColumnInfo
-    private String desc;
+    private String naam;
+    @ColumnInfo
+    private int moestuin_lengte;
+    @ColumnInfo
+    private int moestuin_breedte;
 
+    public Moestuin(int moestuin_id, String img, String naam, int moestuin_lengte, int moestuin_breedte) {
+        this.moestuin_id = moestuin_id;
+        this.img = img;
+        this.naam = naam;
+        this.moestuin_lengte = moestuin_lengte;
+        this.moestuin_breedte = moestuin_breedte;
 
-    public Moestuin(int image, String title, String desc) {
-        this.image = image;
-        this.title = title;
-        this.desc = desc;
     }
 
-    public int getImage() {
-        return image;
+    public int getMoestuin_id() {
+        return moestuin_id;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public String getImg() {
+        return img;
     }
 
-    public String getTitle() {
-        return this.title;
+    public void setImg(String img) {
+        this.img = img;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getNaam() {
+        return naam;
     }
 
-    public String getDesc() {
-        return desc;
+    public void setTitle(String naam) {
+        this.naam = naam;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public int getMoestuin_lengte() {
+        return moestuin_lengte;
+    }
+
+    public int getMoestuin_breedte() {
+        return moestuin_breedte;
+    }
+    public String toString(){
+        return moestuin_id + " " + img + " " + naam + " " + moestuin_lengte + " " + moestuin_breedte;
     }
 }
+

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.room.Room;
+import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -12,7 +13,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.iiatimdapp.Room.Moestuin;
 import com.example.iiatimdapp.Room.MoestuinMaten;
+import com.example.iiatimdapp.Room.Tips;
 import com.example.iiatimdapp.Room.Zaadjes;
 import com.google.gson.Gson;
 
@@ -32,6 +35,8 @@ public class VolleySingleton {
     private AppDatabase appDatabase;
     final ArrayList<MoestuinMaten> moestuinMaten = new ArrayList<>();
     public static ArrayList<Zaadjes> zaadjes = new ArrayList<>();
+    public static ArrayList<Tips> tips = new ArrayList<>();
+    public static ArrayList<Moestuin> moestuinen = new ArrayList<>();
     Gson gson = new Gson();
 
     public VolleySingleton(Context context) {
@@ -126,9 +131,9 @@ public class VolleySingleton {
         addToRequestQueue(jsonObjectRequestZaadjes);
         return zaadjes;
     }
-    public ArrayList<Zaadjes> getZaadjesArray(){
-        Log.d("zaaczaadzaad", zaadjes.toString());
-        return zaadjes;
+
+    public ArrayList<Tips> getTips(){
+        return tips;
     }
 
     public void addMoestuinToDatabase(String naam_moestuin, int moestuin_maten) {

@@ -11,24 +11,4 @@
         <item>930 x 30 cm</item>
     </array>
 
-    <array name="searchSeeds_item">
-        <item>wortel</item>
-        <item>sla</item>
-        <item>Peterselie</item>
-        <item>ui</item>
-        <item>bloemkool</item>
-        <item>aardbeien</item>
-        <item>tomaten</item>
-    </array>
-
-    <array name="searchSeeds_desc">
-        <item> uitleg wortel</item>
-        <item>uitleg sla</item>
-        <item>uitleg Peterselie</item>
-        <item>uitleg ui</item>
-        <item>uitleg bloemkool</item>
-        <item>uitleg aardbeien</item>
-        <item>uitleg tomaten</item>
-    </array>
-
 </resources>

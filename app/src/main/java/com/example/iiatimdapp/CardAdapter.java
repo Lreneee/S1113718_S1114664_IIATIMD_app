@@ -11,12 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.iiatimdapp.Room.Moestuin;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CardAdapter extends PagerAdapter {
 
-    private List<Moestuin> models;
+    private ArrayList<Moestuin> models;
     private LayoutInflater layoutInflater;
     private Context context;
 
@@ -26,7 +28,7 @@ public class CardAdapter extends PagerAdapter {
 
     }
 
-    public CardAdapter(List<Moestuin> models, Context context) {
+    public CardAdapter(ArrayList<Moestuin> models, Context context) {
         this.models = models;
         this.context = context;
     }
@@ -49,9 +51,10 @@ public class CardAdapter extends PagerAdapter {
         title= view.findViewById(R.id.title);
         desc = view. findViewById(R.id.desc);
 
-        image.setImageResource(models.get(position).getImage());
-        title.setText(models.get(position).getTitle());
-        desc.setText(models.get(position).getDesc());
+//        image.setImageResource(models.get(position).getNaam());
+        Picasso.get().load(models.get(position).getImg()).into(image);
+        title.setText(models.get(position).getNaam());
+        desc.setText("Bedekking: " + models.get(position).getMoestuin_lengte() + "/" + models.get(position).getMoestuin_breedte());
 
         container.addView(view, 0);
 

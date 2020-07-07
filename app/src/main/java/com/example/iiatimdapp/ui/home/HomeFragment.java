@@ -3,6 +3,7 @@ package com.example.iiatimdapp.ui.home;
 import android.animation.ArgbEvaluator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +16,23 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.iiatimdapp.CardAdapter;
 import com.example.iiatimdapp.MainActivity;
 import com.example.iiatimdapp.MakeMoestuinActivity;
 import com.example.iiatimdapp.Room.Moestuin;
 import com.example.iiatimdapp.R;
+import com.example.iiatimdapp.VolleySingleton;
+import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +42,9 @@ public class HomeFragment extends Fragment {
 
     ViewPager viewPager;
     CardAdapter adapter;
+    ArrayList<Moestuin> moestuinen = new ArrayList<>();
     List<Moestuin> models;
-    Integer[] colors = null;
+    Gson gson = new Gson();
     ArgbEvaluator argbEvaluator = new ArgbEvaluator();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -54,26 +67,58 @@ public class HomeFragment extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
 
+        RequestQueue queue = VolleySingleton.getInstance(getActivity().getApplicationContext()).getRequestQueue();
+        JsonObjectRequest jsonObjectRequestMoestuinen = new JsonObjectRequest(Request.Method.GET, "http://192.168.2.1:8000/api/moestuinen", null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+                        String moestuinResponse = response.get(Integer.toString(i)).toString();
+
+                        Moestuin moestuin = gson.fromJson(moestuinResponse, Moestuin.class);
+
+                        moestuinen.add(moestuin);
+
+                        Log.d("zaadjes", moestuin.toString());
+                        adapter.notifyDataSetChanged();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("gefaald", error.toString());
+                String body = "";
+                String statusCode = String.valueOf(error.networkResponse.statusCode);
+                if (error.networkResponse.data != null) {
+                    try {
+                        body = new String(error.networkResponse.data, "UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Log.d("FAILURE22", body);
+            }
+        });
+        queue.add(jsonObjectRequestMoestuinen);
+
         models = new ArrayList<>();
-        models.add(new Moestuin(R.drawable.broccoli, "brocoli", "  "));
-        models.add(new Moestuin(R.drawable.broccoli, "brocoli", "  "));
-        models.add(new Moestuin(R.drawable.broccoli, "brocoli", "  "));
-        models.add(new Moestuin(R.drawable.broccoli, "brocoli", "  "));
+        models.add(new Moestuin(R.drawable.broccoli, "brocoli", "  ", 2, 2));
+        models.add(new Moestuin(R.drawable.broccoli, "brocoli", "  ", 2, 2));
+        models.add(new Moestuin(R.drawable.broccoli, "brocoli", "  ", 2, 2));
+        models.add(new Moestuin(R.drawable.broccoli, "brocoli", "  ", 3, 3));
 
-
-        adapter = new CardAdapter(models, getActivity());
+        adapter = new CardAdapter(moestuinen, getActivity());
         viewPager = getView().findViewById(R.id.cardViewPager);
         viewPager.setAdapter(adapter);
-        viewPager.setPadding(0, 0, 180, 0);
+        viewPager.setPadding(0, 0, 410, 0);
+        viewPager.setBackgroundColor(getResources().getColor(R.color.lightGrey));
 
-        Integer[] colors_temp = {
-                getResources().getColor(R.color.color1),
-                getResources().getColor(R.color.color2),
-                getResources().getColor(R.color.color3),
-                getResources().getColor(R.color.color4)
-        };
 
-        Button button= getView().findViewById(R.id.btnAdd);
+        Button button = getView().findViewById(R.id.btnAdd);
         button.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -83,17 +128,10 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        colors = colors_temp;
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position < (adapter.getCount() - 1) && position < (colors.length - 1)) {
-                    viewPager.setBackgroundColor((Integer) argbEvaluator.evaluate(positionOffset, colors[position], colors[position + 1]));
-
-                } else {
-                    viewPager.setBackgroundColor(colors[colors.length - 1]);
-                }
             }
 
             @Override
