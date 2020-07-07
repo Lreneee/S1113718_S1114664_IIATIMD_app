@@ -1,9 +1,11 @@
 package com.example.iiatimdapp.ui.home;
 
 import android.animation.ArgbEvaluator;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -22,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.iiatimdapp.CardAdapter;
+import com.example.iiatimdapp.DetailsMoestuinActivity;
 import com.example.iiatimdapp.MainActivity;
 import com.example.iiatimdapp.MakeMoestuinActivity;
 import com.example.iiatimdapp.Room.Moestuin;
@@ -42,10 +46,8 @@ public class HomeFragment extends Fragment {
 
     ViewPager viewPager;
     CardAdapter adapter;
-    ArrayList<Moestuin> moestuinen = new ArrayList<>();
-    List<Moestuin> models;
+    public static ArrayList<Moestuin> moestuinen = new ArrayList<>();
     Gson gson = new Gson();
-    ArgbEvaluator argbEvaluator = new ArgbEvaluator();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -105,12 +107,6 @@ public class HomeFragment extends Fragment {
         });
         queue.add(jsonObjectRequestMoestuinen);
 
-        models = new ArrayList<>();
-        models.add(new Moestuin(R.drawable.broccoli, "brocoli", "  ", 2, 2));
-        models.add(new Moestuin(R.drawable.broccoli, "brocoli", "  ", 2, 2));
-        models.add(new Moestuin(R.drawable.broccoli, "brocoli", "  ", 2, 2));
-        models.add(new Moestuin(R.drawable.broccoli, "brocoli", "  ", 3, 3));
-
         adapter = new CardAdapter(moestuinen, getActivity());
         viewPager = getView().findViewById(R.id.cardViewPager);
         viewPager.setAdapter(adapter);
@@ -123,11 +119,10 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), MakeMoestuinActivity.class);
+                Intent i = new Intent(getActivity(), DetailsMoestuinActivity.class);
                 startActivity(i);
             }
         });
-
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
