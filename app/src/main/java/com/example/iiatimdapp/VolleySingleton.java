@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.room.Room;
+import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -134,46 +135,6 @@ public class VolleySingleton {
     public ArrayList<Tips> getTips(){
         return tips;
     }
-    public ArrayList<Moestuin> getPersonalMoestuinen(){
-        JsonObjectRequest jsonObjectRequestMoestuinen = new JsonObjectRequest(Request.Method.GET, "http://192.168.2.1:8000/api/moestuinen", null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    for (int i = 0; i < response.length(); i++) {
-                        String moestuinResponse = response.get(Integer.toString(i)).toString();
-
-                        Moestuin moestuin = gson.fromJson(moestuinResponse, Moestuin.class);
-
-                        moestuinen.add(moestuin);
-
-                        Log.d("zaadjes", moestuin.toString());
-                        Log.d("zaadjesarray", moestuinResponse.toString());
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("gefaald", error.toString());
-                String body = "";
-                String statusCode = String.valueOf(error.networkResponse.statusCode);
-                if (error.networkResponse.data != null) {
-                    try {
-                        body = new String(error.networkResponse.data, "UTF-8");
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                }
-                Log.d("FAILURE22", body);
-            }
-        });
-        addToRequestQueue(jsonObjectRequestMoestuinen);
-        return moestuinen;
-    }
-
 
     public void addMoestuinToDatabase(String naam_moestuin, int moestuin_maten) {
         final JSONObject object = new JSONObject();
