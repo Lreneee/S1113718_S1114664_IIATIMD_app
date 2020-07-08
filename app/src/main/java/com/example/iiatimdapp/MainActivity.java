@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject json = new JSONObject(response);
 
                     String accessToken = json.getString("access_token");
+                    APIManager.getInstance(getApplicationContext()).setAccessToken(accessToken);
                     String refreshToken = json.getString("refresh_token");
                     Token token = new Token(accessToken, refreshToken);
                     AppDatabase db = AppDatabase.getInstance(getApplicationContext());
