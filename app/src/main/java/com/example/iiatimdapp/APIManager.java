@@ -1,10 +1,7 @@
 package com.example.iiatimdapp;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
-
-import androidx.room.Room;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -13,8 +10,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.example.iiatimdapp.Room.GetTokenTask;
-import com.example.iiatimdapp.Room.HandleTokenTask;
 import com.example.iiatimdapp.Room.MoestuinMaten;
 import com.example.iiatimdapp.Room.Token;
 import com.example.iiatimdapp.Room.Zaadjes;
@@ -27,7 +22,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 public class APIManager {
 
@@ -43,9 +37,9 @@ public class APIManager {
 
 
     private APIManager(Context context) {
-        this.baseUrl = "http://192.168.2.1:8000";
+        this.baseUrl = "http://192.168.1.112:8000";
         this.clientID = "3";
-        this.clientSecret = "PskrZdqAQXU4Qpq8NyyKP5LUwFoZfy82tcKR4xuo";
+        this.clientSecret = "oQz9P4s4IYcduzGgjMrRdO7X77QHlDj4tJCcZuYE";
         this.context = context;
         this.queue = VolleySingleton.getInstance(context).getRequestQueue();
     }
