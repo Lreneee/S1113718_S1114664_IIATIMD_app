@@ -17,12 +17,14 @@ import com.example.iiatimdapp.Room.GetTokenTask;
 import com.example.iiatimdapp.Room.HandleTokenTask;
 import com.example.iiatimdapp.Room.MoestuinMaten;
 import com.example.iiatimdapp.Room.Token;
+import com.example.iiatimdapp.Room.Zaadjes;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -37,12 +39,13 @@ public class APIManager {
     private String clientSecret;
     private Gson gson = new Gson();
     private String accessToken;
+    public static ArrayList<Zaadjes> zaadjes = new ArrayList<>();
 
 
     private APIManager(Context context) {
-        this.baseUrl = "http://192.168.1.112:8000";
+        this.baseUrl = "http://192.168.2.1:8000";
         this.clientID = "3";
-        this.clientSecret = "oQz9P4s4IYcduzGgjMrRdO7X77QHlDj4tJCcZuYE";
+        this.clientSecret = "Y6RKkfLdy4uVl3apeA1ctvXKGngNFkj0LhUd9wfq";
         this.context = context;
         this.queue = VolleySingleton.getInstance(context).getRequestQueue();
     }
@@ -72,6 +75,14 @@ public class APIManager {
                         if (error.getMessage() != null) {
                             Log.e("APIManager", error.getMessage());
                             error.printStackTrace();
+                            String body = "";
+                            if (error.networkResponse.data != null) {
+                                try {
+                                    body = new String(error.networkResponse.data, "UTF-8");
+                                } catch (UnsupportedEncodingException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
                     }
                 }) {
@@ -119,6 +130,36 @@ public class APIManager {
         };
 
         queue.add(stringRequest);
+    }
+    public ArrayList<Zaadjes> getZaadjes2() {
+        JsonObjectRequest jsonObjectRequestZaadjes = new JsonObjectRequest(Request.Method.GET, "http://192.168.2.1:8000/api/zaadjes", null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+                        String zaadjesResponse = response.get(Integer.toString(i)).toString();
+
+                        Zaadjes zaadje = gson.fromJson(zaadjesResponse, Zaadjes.class);
+
+                        zaadjes.add(zaadje);
+
+                        Log.d("zaadjes", zaadje.toString());
+                        Log.d("zaadjesarray", zaadjes.toString());
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("gefaald", error.toString());
+
+            }
+        });
+       queue.add(jsonObjectRequestZaadjes);
+        return zaadjes;
     }
 
     public void getAllMoestuinen(Response.Listener<JSONObject> zaadjes, Response.ErrorListener errorListener) {

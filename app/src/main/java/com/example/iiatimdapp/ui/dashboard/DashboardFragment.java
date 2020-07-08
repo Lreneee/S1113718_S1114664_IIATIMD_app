@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.iiatimdapp.ChooseSeedsActivity;
+import com.example.iiatimdapp.HomeActivity;
 import com.example.iiatimdapp.MainActivity;
 import com.example.iiatimdapp.R;
 import com.example.iiatimdapp.Room.Zaadjes;
@@ -47,7 +48,7 @@ public class DashboardFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.hasFixedSize();
 
-        ArrayList<Zaadjes> zaadjes = MainActivity.zaadjes;
+        ArrayList<Zaadjes> zaadjes = HomeActivity.zaadjes;
 
        Log.d("zaad", zaadjes.toString());
         recyclerViewAdapter = new SearchSeedsAdapter(zaadjes);

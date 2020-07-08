@@ -53,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
 //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 //        NavigationUI.setupWithNavController(navView, navController);
 //
-//        zaadjes = VolleySingleton.getInstance(this).getZaadjes();
-
 
         final Response.Listener<String> loginResponse = new Response.Listener<String>() {
             @Override
