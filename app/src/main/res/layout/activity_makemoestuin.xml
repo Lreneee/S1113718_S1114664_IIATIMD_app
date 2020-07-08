@@ -17,6 +17,7 @@
 
 
         <ImageView
+            android:id="@+id/image_moestuin"
             android:layout_width="299dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -28,6 +29,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="24dp"
         android:text="@string/moestuin_making"
+        android:transitionName="addMoestuin"
         android:textSize="24dp"
         android:textColor="#000000"
 />

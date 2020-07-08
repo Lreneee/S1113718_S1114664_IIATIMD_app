@@ -36,6 +36,8 @@ public class VolleySingleton {
     final ArrayList<MoestuinMaten> moestuinMaten = new ArrayList<>();
     public static ArrayList<Tips> tips = new ArrayList<>();
     public static ArrayList<Moestuin> moestuinen = new ArrayList<>();
+    public static ArrayList<Zaadjes> zaadjes = new ArrayList<>();
+    Gson gson = new Gson();
 
     public VolleySingleton(Context context) {
         ctx = context;
@@ -95,7 +97,36 @@ public class VolleySingleton {
 //        });
 //        addToRequestQueue(jsonObjectRequest);
 //    }
+public ArrayList<Zaadjes> getZaadjes() {
+    JsonObjectRequest jsonObjectRequestZaadjes = new JsonObjectRequest(Request.Method.GET, "http://192.168.2.1:8000/api/zaadjes", null, new Response.Listener<JSONObject>() {
+        @Override
+        public void onResponse(JSONObject response) {
+            try {
+                for (int i = 0; i < response.length(); i++) {
+                    String zaadjesResponse = response.get(Integer.toString(i)).toString();
 
+                    Zaadjes zaadje = gson.fromJson(zaadjesResponse, Zaadjes.class);
+
+                    zaadjes.add(zaadje);
+
+                    Log.d("zaadjes", zaadje.toString());
+                    Log.d("zaadjesarray", zaadjes.toString());
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }, new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            Log.d("gefaald", error.toString());
+
+        }
+    });
+    addToRequestQueue(jsonObjectRequestZaadjes);
+    return zaadjes;
+}
     public ArrayList<MoestuinMaten> getMoestuinMatenArraylist() {
         return moestuinMaten;
     }

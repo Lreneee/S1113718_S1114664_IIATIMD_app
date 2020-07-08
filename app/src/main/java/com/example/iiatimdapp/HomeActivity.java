@@ -18,6 +18,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.iiatimdapp.Room.GetTokenTask;
 import com.example.iiatimdapp.Room.MoestuinMaten;
+import com.example.iiatimdapp.Room.Zaadjes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -41,6 +42,7 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
     Gson gson = new Gson();
+    public static ArrayList<Zaadjes> zaadjes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +76,7 @@ public class HomeActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        APIManager.getInstance(getApplicationContext()).getMoestuinMaten();
+        zaadjes = APIManager.getInstance(this).getZaadjes2();
 
 //        Button btnAdd = (Button) findViewById(R.id.btnAdd);
 //

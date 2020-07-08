@@ -23,7 +23,7 @@
         android:layout_marginRight="257dp"
         android:layout_marginBottom="28dp"
         android:textColor="@color/colorLightBrown"
-        android:text="Welkom bij de moestuin app"
+        android:text="@string/moestuin_login"
         android:textSize="40dp"
         />
 
@@ -57,7 +57,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginStart="35dp"
         android:layout_marginLeft="35dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="35dp"
         android:layout_marginRight="35dp"
         android:ems="10"
@@ -75,7 +75,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginStart="0dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="35dp"
         android:layout_marginRight="35dp"
         android:ems="10"

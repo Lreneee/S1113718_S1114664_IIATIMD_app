@@ -13,7 +13,7 @@ import com.example.iiatimdapp.Room.TokenDAO;
 import com.example.iiatimdapp.Room.moestuinDAO;
 import com.example.iiatimdapp.Room.moestuinMatenDAO;
 
-@Database(entities = {Moestuin.class, MoestuinMaten.class, Token.class}, version = 1)
+@Database(entities = {Moestuin.class, MoestuinMaten.class, Token.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract moestuinDAO moestuinDAO();

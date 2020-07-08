@@ -1,6 +1,9 @@
 package com.example.iiatimdapp;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.iiatimdapp.Room.Moestuin;
+import com.example.iiatimdapp.ui.home.HomeFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -19,8 +23,10 @@ import java.util.List;
 public class CardAdapter extends PagerAdapter {
 
     private ArrayList<Moestuin> models;
+    public static ArrayList<Moestuin> chosenMoestuin;
     private LayoutInflater layoutInflater;
     private Context context;
+    private int clickedItemCard;
 
     @Override
     public int getCount() {
@@ -40,7 +46,7 @@ public class CardAdapter extends PagerAdapter {
 
     @NonNull
     @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.item, container, false);
         ImageView image;
@@ -55,6 +61,19 @@ public class CardAdapter extends PagerAdapter {
         Picasso.get().load(models.get(position).getImg()).into(image);
         title.setText(models.get(position).getNaam());
         desc.setText("Bedekking: " + models.get(position).getMoestuin_lengte() + "/" + models.get(position).getMoestuin_breedte());
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<Moestuin> moestuinen = HomeFragment.moestuinen;
+                clickedItemCard = position + 1;
+                Intent i = new Intent(context, DetailsMoestuinActivity.class);
+                i.putExtra("clickedMoestuin", Integer.toString(clickedItemCard));
+                context.startActivity(i);
+                Log.d("couter", Integer.toString(clickedItemCard));
+                Log.i("TAG", "This page was clicked: " + position);
+            }
+        });
 
         container.addView(view, 0);
 
