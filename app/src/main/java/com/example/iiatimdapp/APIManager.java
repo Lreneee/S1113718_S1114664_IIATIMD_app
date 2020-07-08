@@ -1,6 +1,9 @@
 package com.example.iiatimdapp;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -18,7 +21,12 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -308,7 +316,14 @@ public class APIManager {
         this.accessToken = accessToken;
     }
 
-    public void deleteAccessToken() {
-        this.accessToken = null;
+    public void deleteAccessToken() { this.accessToken = null; }
+
+    public boolean checkConnection() {
+        ConnectivityManager conMgr = (ConnectivityManager) this.context.getSystemService (Context.CONNECTIVITY_SERVICE);
+
+        return conMgr.getActiveNetworkInfo() != null
+                && conMgr.getActiveNetworkInfo().isAvailable()
+                && conMgr.getActiveNetworkInfo().isConnected();
     }
+
 }
