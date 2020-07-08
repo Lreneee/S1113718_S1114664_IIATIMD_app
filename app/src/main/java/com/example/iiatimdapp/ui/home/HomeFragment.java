@@ -93,16 +93,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("gefaald", error.toString());
-                String body = "";
-                String statusCode = String.valueOf(error.networkResponse.statusCode);
-                if (error.networkResponse.data != null) {
-                    try {
-                        body = new String(error.networkResponse.data, "UTF-8");
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                }
-                Log.d("FAILURE22", body);
             }
         });
         queue.add(jsonObjectRequestMoestuinen);
@@ -119,7 +109,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), DetailsMoestuinActivity.class);
+                Intent i = new Intent(getActivity(), MakeMoestuinActivity.class);
                 startActivity(i);
             }
         });

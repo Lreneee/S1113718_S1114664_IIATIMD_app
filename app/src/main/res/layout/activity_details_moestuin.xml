@@ -1,9 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".DetailsMoestuinActivity">
+    android:orientation="vertical"
+    android:id="@+id/makemoestuin"
+    android:layout_weight="0">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:background="#E5E5E5"
+        android:orientation="vertical"
+        android:paddingTop="80dp"
+        android:paddingBottom="80dp">
+
+
+        <androidx.gridlayout.widget.GridLayout
+            android:id="@+id/moestuinAddLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp">
+
+        </androidx.gridlayout.widget.GridLayout>
+
+    </LinearLayout>
+
+<TextView
+    android:id="@+id/moestuinDetail_title"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="40dp"
+    android:text="Irene's moestuin"
+    android:transitionName="addMoestuin"
+    android:textSize="24dp"
+    android:textColor="@color/almostBlack"
+    />
+    <TextView
+        android:id="@+id/moestuinDetail_bedekking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="40dp"
+        android:text="Irene's moestuin"
+        android:transitionName="addMoestuin"
+        android:textSize="18dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="111dp"
+        android:layout_gravity="bottom"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/btnAddSeeds"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/round"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="Bekijk alle zaadjes"
+            android:textColor="#FFFFFF"
+
+
+            />
+    </LinearLayout>
+
+</LinearLayout>
+
