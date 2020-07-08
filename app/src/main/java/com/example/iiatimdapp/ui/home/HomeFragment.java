@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +19,8 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.Request;
@@ -31,6 +35,8 @@ import com.example.iiatimdapp.MainActivity;
 import com.example.iiatimdapp.MakeMoestuinActivity;
 import com.example.iiatimdapp.Room.Moestuin;
 import com.example.iiatimdapp.R;
+import com.example.iiatimdapp.Room.Tips;
+import com.example.iiatimdapp.TipsAdapter;
 import com.example.iiatimdapp.VolleySingleton;
 import com.google.gson.Gson;
 
@@ -47,8 +53,14 @@ public class HomeFragment extends Fragment {
 
     ViewPager viewPager;
     CardAdapter adapter;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter recyclerViewAdapter;
+    private RecyclerView.LayoutManager layoutManager;
     public static ArrayList<Moestuin> moestuinen = new ArrayList<>();
+    public static ArrayList<Tips> tipsArray = new ArrayList<>();
     Gson gson = new Gson();
+    TextView title, desc;
+    ImageView image;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -69,6 +81,12 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
+
+        recyclerView = getActivity().findViewById(R.id.tips_recycler_view);
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.hasFixedSize();
+
 
         APIManager.getInstance(getActivity().getApplicationContext()).getAllMoestuinen(new Response.Listener<JSONObject>() {
             @Override
@@ -105,6 +123,45 @@ public class HomeFragment extends Fragment {
                 Log.d("FAILURE22", body);
             }
         });
+        APIManager.getInstance(getActivity().getApplicationContext()).getTips(new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+                        String tipsResponse = response.get(Integer.toString(i)).toString();
+
+                        Tips tips = gson.fromJson(tipsResponse, Tips.class);
+
+                        tipsArray.add(tips);
+
+                        Log.d("tips", tips.toString());
+                       recyclerViewAdapter.notifyDataSetChanged();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("gefaald", error.toString());
+                String body = "";
+
+                if (error.networkResponse.data != null) {
+                    try {
+                        body = new String(error.networkResponse.data, "UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Log.d("FAILURE22", body);
+            }
+        });
+
+        recyclerViewAdapter = new TipsAdapter(tipsArray);
+        recyclerView.setAdapter(recyclerViewAdapter);
+
 
         adapter = new CardAdapter(moestuinen, getActivity());
         viewPager = getView().findViewById(R.id.cardViewPager);

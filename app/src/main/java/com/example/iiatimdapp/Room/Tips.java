@@ -40,4 +40,7 @@ public class Tips {
     public String getImg(){
         return getImg();
     }
+    public String toString(){
+        return id + " " + title + " " + short_description + " " + long_description;
+    }
 }

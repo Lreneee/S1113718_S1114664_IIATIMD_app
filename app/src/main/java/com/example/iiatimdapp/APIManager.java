@@ -45,7 +45,7 @@ public class APIManager {
     private APIManager(Context context) {
         this.baseUrl = "http://192.168.2.1:8000";
         this.clientID = "3";
-        this.clientSecret = "Y6RKkfLdy4uVl3apeA1ctvXKGngNFkj0LhUd9wfq";
+        this.clientSecret = "PskrZdqAQXU4Qpq8NyyKP5LUwFoZfy82tcKR4xuo";
         this.context = context;
         this.queue = VolleySingleton.getInstance(context).getRequestQueue();
     }
@@ -164,6 +164,25 @@ public class APIManager {
 
     public void getAllMoestuinen(Response.Listener<JSONObject> zaadjes, Response.ErrorListener errorListener) {
         String url = baseUrl + "/api/moestuinen";
+
+        JsonObjectRequest jsonObjectRequestMoestuinen = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                zaadjes,
+                errorListener) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+
+        queue.add(jsonObjectRequestMoestuinen);
+    }
+    public void getTips(Response.Listener<JSONObject> zaadjes, Response.ErrorListener errorListener) {
+        String url = baseUrl + "/api/tips";
 
         JsonObjectRequest jsonObjectRequestMoestuinen = new JsonObjectRequest(
                 Request.Method.GET,

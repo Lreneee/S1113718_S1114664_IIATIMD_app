@@ -67,6 +67,7 @@ public class DetailsMoestuinActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             for (int i = 0; i < response.length(); i++) {
+                                Log.d("response", response.toString());
                                 String zaadjesResponse = response.get(Integer.toString(i)).toString();
 
                                 MoestuinDetails moestuin = gson.fromJson(zaadjesResponse, MoestuinDetails.class);
@@ -75,9 +76,9 @@ public class DetailsMoestuinActivity extends AppCompatActivity {
                                 naam.setText(moestuin.getNaam());
                                 bedekking.setText("Bedekking: " + moestuin.getLengte_in_vakjes() + "/" + moestuin.getBreedte_in_vakjes());
 
-                                GridLayoutManager.LayoutParams params = new GridLayoutManager.LayoutParams(moestuin.getLengte_in_vakjes(), moestuin.getBreedte_in_vakjes());
-                                imageView.setLayoutParams(params);
-                                gridLayout.addView(imageView);
+//                                GridLayoutManager.LayoutParams params = new GridLayoutManager.LayoutParams(moestuin.getLengte_in_vakjes(), moestuin.getBreedte_in_vakjes());
+//                                imageView.setLayoutParams(params);
+//                                gridLayout.addView(imageView);
                             }
 
                         } catch (JSONException e) {
@@ -90,16 +91,6 @@ public class DetailsMoestuinActivity extends AppCompatActivity {
                 Log.d("response", error.toString());
                 Log.d("object_response", object.toString());
 
-                String body = "";
-                String statusCode = String.valueOf(error.networkResponse.statusCode);
-                if (error.networkResponse.data != null) {
-                    try {
-                        body = new String(error.networkResponse.data, "UTF-8");
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                }
-                Log.d("FAILURE22", body);
             }
         }) {
             @Override
@@ -116,7 +107,7 @@ public class DetailsMoestuinActivity extends AppCompatActivity {
 
             @Override
             public void onClick (View v){
-                Intent myIntent = new Intent(DetailsMoestuinActivity.this, MainActivity.class);
+                Intent myIntent = new Intent(DetailsMoestuinActivity.this, HomeActivity.class);
                 startActivity(myIntent);
             }
         });
