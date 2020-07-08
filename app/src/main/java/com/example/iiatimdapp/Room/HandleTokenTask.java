@@ -14,12 +14,6 @@ public class HandleTokenTask implements Runnable {
 
     @Override
     public void run() {
-        Token token = db.tokenDAO().getToken();
-
-        if (token == null) {
-            db.tokenDAO().InsertToken(this.token);
-        } else {
-            db.tokenDAO().UpdateToken(this.token);
-        }
+        db.tokenDAO().InsertToken(this.token);
     }
 }

@@ -16,8 +16,10 @@ import com.example.iiatimdapp.Room.HandleTokenTask;
 
 import com.example.iiatimdapp.Room.Zaadjes;
 
+import com.google.android.gms.common.api.Api;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -54,6 +56,22 @@ public class MainActivity extends AppCompatActivity {
 //        NavigationUI.setupWithNavController(navView, navController);
 //
 //        zaadjes = VolleySingleton.getInstance(this).getZaadjes();
+
+
+        AppDatabase.getInstance(getApplicationContext()).tokenDAO().getToken().observe(this, new Observer<Token>() {
+            @Override
+            public void onChanged(Token token) {
+
+                if (token != null) {
+                    APIManager.getInstance(getApplicationContext()).setAccessToken(token.getAccessToken());
+
+                    Intent myIntent = new Intent(MainActivity.this, HomeActivity.class);
+                    MainActivity.this.startActivity(myIntent);
+
+                }
+
+            }
+        });
 
 
         final Response.Listener<String> loginResponse = new Response.Listener<String>() {

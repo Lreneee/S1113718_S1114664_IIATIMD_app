@@ -18,8 +18,8 @@ public class GetTokenTask implements Runnable {
 
     @Override
     public void run() {
-        Token token = this.db.tokenDAO().getToken();
+//        Token token = this.db.tokenDAO().getToken();
 
-        api.setAccessToken(token.getAccessToken());
+//        api.setAccessToken(token.getAccessToken());
     }
 }

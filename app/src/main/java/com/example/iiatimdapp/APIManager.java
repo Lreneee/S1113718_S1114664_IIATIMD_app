@@ -56,8 +56,6 @@ public class APIManager {
 
     private static APIManager create(final Context context) {
         APIManager api = new APIManager(context);
-        Thread tread = new Thread(new GetTokenTask(AppDatabase.getInstance(context), api));
-        tread.start();
         return api;
     }
 
@@ -254,5 +252,9 @@ public class APIManager {
 
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
+    }
+
+    public void deleteAccessToken() {
+        this.accessToken = null;
     }
 }

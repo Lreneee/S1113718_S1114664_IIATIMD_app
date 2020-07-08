@@ -28,14 +28,14 @@ public class ChooseSeedsAdapter extends RecyclerView.Adapter<ChooseSeedsAdapter.
 
     @NonNull
     @Override
-    public ChooseSeedsAdapter.SeedsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SeedsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.row_chooseseed_recyclerview, parent, false);
-        return new ChooseSeedsAdapter.SeedsViewHolder(view);
+        return new SeedsViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ChooseSeedsAdapter.SeedsViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SeedsViewHolder holder, int position) {
         holder.title_txt.setText(data_title[position]);
         holder.desc_txt.setText(data_desc[position]);
         holder.image.setImageResource(data_img[position]);
