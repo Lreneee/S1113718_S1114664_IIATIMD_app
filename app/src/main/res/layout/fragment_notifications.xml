@@ -41,53 +41,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:text="Login"
+                    android:text="Account"
                     android:textColor="#000000"
                     android:textSize="16dp" />
             </LinearLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:hint="Email"
-                    android:textSize="14dp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:hint="Wachtwoord"
-                    android:textSize="14dp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="20dp"
-                android:text="@string/register"
-                android:textColor="#000000"
-                android:textSize="10dp" />
-
             <Button
-                android:id="@+id/login"
+                android:id="@+id/btnLoguit"
                 android:layout_width="301dp"
                 android:layout_height="34dp"
                 android:layout_gravity="bottom"
@@ -98,7 +58,7 @@
                 android:background="@drawable/round"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:text="Log in"
+                android:text="Uitloggen"
                 android:textColor="#FFFFFF"
 
 
