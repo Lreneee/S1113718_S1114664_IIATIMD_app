@@ -1,10 +1,7 @@
 package com.example.iiatimdapp;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
-
-import androidx.room.Room;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -13,10 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.example.iiatimdapp.Room.GetTokenTask;
-import com.example.iiatimdapp.Room.HandleTokenTask;
 import com.example.iiatimdapp.Room.MoestuinMaten;
-import com.example.iiatimdapp.Room.Token;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -25,7 +19,6 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 public class APIManager {
 
