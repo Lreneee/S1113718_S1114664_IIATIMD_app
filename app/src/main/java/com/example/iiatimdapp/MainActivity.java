@@ -39,88 +39,89 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
 
-        setContentView(R.layout.activity_main);
-        BottomNavigationView navView = findViewById(R.id.bottomNavigationView);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);
 
-        zaadjes = VolleySingleton.getInstance(this).getZaadjes();
+//        setContentView(R.layout.activity_main);
+//        BottomNavigationView navView = findViewById(R.id.bottomNavigationView);
+//        // Passing each menu ID as a set of Ids because each
+//        // menu should be considered as top level destinations.
+//        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+//                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
+//                .build();
+//        NavController navController = Navigation.findNavController(this, R.id.fragment);
+//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+//        NavigationUI.setupWithNavController(navView, navController);
 //
-//        setContentView(R.layout.activity_login);
-//
-//        final Response.Listener<String> loginResponse = new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                try {
-//                    JSONObject json = new JSONObject(response);
-//
-//                    String accessToken = json.getString("access_token");
-//                    String refreshToken = json.getString("refresh_token");
-//                    Token token = new Token(accessToken, refreshToken);
-//                    AppDatabase db = AppDatabase.getInstance(getApplicationContext());
-//                    new Thread(new HandleTokenTask(db, token)).start();
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                Intent myIntent = new Intent(MainActivity.this, HomeActivity.class);
-//                MainActivity.this.startActivity(myIntent);
-//            }
-//        };
-//
-//        Button btnLogin = (Button) findViewById(R.id.btnLogin);
-//
-//        btnLogin.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//
-//                final EditText usernameField = (EditText) findViewById(R.id.userName);
-//                final String username = usernameField.getText().toString();
-//                final EditText passwordField = (EditText) findViewById(R.id.password);
-//                final String password = passwordField.getText().toString();
-//
-//                if (username.length() > 0 && password.length() > 0) {
-//                    APIManager.getInstance(getApplicationContext()).loginRequest(username, password,loginResponse);
-//                }
-//
-//            }
-//        });
-//
-//        Button btnRegister = (Button) findViewById(R.id.btnRegister);
-//
-//        btnRegister.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//
-//                Log.d("MainActivity", "Button clicked");
-//                final EditText usernameField = (EditText) findViewById(R.id.userName);
-//                final String username = usernameField.getText().toString();
-//                final EditText passwordField = (EditText) findViewById(R.id.password);
-//                final String password = passwordField.getText().toString();
-//
-//                if (username.length() > 0 && password.length() > 0) {
-//
-//                    APIManager.getInstance(getApplicationContext()).registerRequest(username, password,
-//                            new Response.Listener<String>() {
-//                                @Override
-//                                public void onResponse(String response) {
-//                                    Log.d("MainActivity", "response");
-//                                    APIManager.getInstance(getApplicationContext()).loginRequest(username, password, loginResponse);
-//                                }
-//                            });
-//                }
-//            }
-//        });
+//        zaadjes = VolleySingleton.getInstance(this).getZaadjes();
+
+
+        final Response.Listener<String> loginResponse = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject json = new JSONObject(response);
+
+                    String accessToken = json.getString("access_token");
+                    String refreshToken = json.getString("refresh_token");
+                    Token token = new Token(accessToken, refreshToken);
+                    AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+                    new Thread(new HandleTokenTask(db, token)).start();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                Intent myIntent = new Intent(MainActivity.this, HomeActivity.class);
+                MainActivity.this.startActivity(myIntent);
+            }
+        };
+
+        Button btnLogin = (Button) findViewById(R.id.btnLogin);
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                final EditText usernameField = (EditText) findViewById(R.id.userName);
+                final String username = usernameField.getText().toString();
+                final EditText passwordField = (EditText) findViewById(R.id.password);
+                final String password = passwordField.getText().toString();
+
+                if (username.length() > 0 && password.length() > 0) {
+                    APIManager.getInstance(getApplicationContext()).loginRequest(username, password,loginResponse);
+                }
+
+            }
+        });
+
+        Button btnRegister = (Button) findViewById(R.id.btnRegister);
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Log.d("MainActivity", "Button clicked");
+                final EditText usernameField = (EditText) findViewById(R.id.userName);
+                final String username = usernameField.getText().toString();
+                final EditText passwordField = (EditText) findViewById(R.id.password);
+                final String password = passwordField.getText().toString();
+
+                if (username.length() > 0 && password.length() > 0) {
+
+                    APIManager.getInstance(getApplicationContext()).registerRequest(username, password,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Log.d("MainActivity", "response");
+                                    APIManager.getInstance(getApplicationContext()).loginRequest(username, password, loginResponse);
+                                }
+                            });
+                }
+            }
+        });
 
 
     }

@@ -74,37 +74,7 @@ public class HomeActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-
-        RequestQueue queue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://192.168.2.1:8000/api/moestuin_maten/get", null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    for(int i=0; i<response.length(); i++){
-                        String moestuinResponse = response.get(Integer.toString(i)).toString();
-
-                        MoestuinMaten moestuinMaat = gson.fromJson(moestuinResponse, MoestuinMaten.class);
-
-                        Log.d("maten", moestuinMaat.toString());
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("gefaald", error.toString());
-
-            }
-        });
-
-        VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
-
-        AppDatabase db = AppDatabase.getInstance(getApplicationContext());
-        new Thread(new GetTokenTask(db)).start();
+        APIManager.getInstance(getApplicationContext()).getMoestuinMaten();
 
 //        Button btnAdd = (Button) findViewById(R.id.btnAdd);
 //

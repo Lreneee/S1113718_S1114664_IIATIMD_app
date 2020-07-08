@@ -24,6 +24,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.iiatimdapp.APIManager;
 import com.example.iiatimdapp.CardAdapter;
 import com.example.iiatimdapp.DetailsMoestuinActivity;
 import com.example.iiatimdapp.MainActivity;
@@ -69,8 +70,7 @@ public class HomeFragment extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
 
-        RequestQueue queue = VolleySingleton.getInstance(getActivity().getApplicationContext()).getRequestQueue();
-        JsonObjectRequest jsonObjectRequestMoestuinen = new JsonObjectRequest(Request.Method.GET, "http://192.168.2.1:8000/api/moestuinen", null, new Response.Listener<JSONObject>() {
+        APIManager.getInstance(getActivity().getApplicationContext()).getAllMoestuinen(new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -93,9 +93,18 @@ public class HomeFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("gefaald", error.toString());
+                String body = "";
+
+                if (error.networkResponse.data != null) {
+                    try {
+                        body = new String(error.networkResponse.data, "UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Log.d("FAILURE22", body);
             }
         });
-        queue.add(jsonObjectRequestMoestuinen);
 
         adapter = new CardAdapter(moestuinen, getActivity());
         viewPager = getView().findViewById(R.id.cardViewPager);
