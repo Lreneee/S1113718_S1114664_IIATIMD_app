@@ -76,9 +76,6 @@ public class HomeActivity extends AppCompatActivity {
 
         APIManager.getInstance(getApplicationContext()).getMoestuinMaten();
 
-        AppDatabase db = AppDatabase.getInstance(getApplicationContext());
-        new Thread(new GetTokenTask(db)).start();
-
 //        Button btnAdd = (Button) findViewById(R.id.btnAdd);
 //
 //        btnAdd.setOnClickListener(new View.OnClickListener(){

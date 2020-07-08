@@ -13,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.example.iiatimdapp.Room.GetTokenTask;
 import com.example.iiatimdapp.Room.HandleTokenTask;
 import com.example.iiatimdapp.Room.MoestuinMaten;
 import com.example.iiatimdapp.Room.Token;
@@ -24,6 +25,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 public class APIManager {
 
@@ -34,6 +36,7 @@ public class APIManager {
     private String clientID;
     private String clientSecret;
     private Gson gson = new Gson();
+    private String accessToken;
 
 
     private APIManager(Context context) {
@@ -52,7 +55,10 @@ public class APIManager {
     }
 
     private static APIManager create(final Context context) {
-        return new APIManager(context);
+        APIManager api = new APIManager(context);
+        Thread tread = new Thread(new GetTokenTask(AppDatabase.getInstance(context), api));
+        tread.start();
+        return api;
     }
 
     void loginRequest(final String username, final String password, Response.Listener<String> onResponse) {
@@ -123,7 +129,14 @@ public class APIManager {
                 url,
                 null,
                 zaadjes,
-                errorListener);
+                errorListener) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
 
         queue.add(jsonObjectRequestMoestuinen);
     }
@@ -136,7 +149,14 @@ public class APIManager {
                 url,
                 null,
                 jsonObjectListener,
-                gefaald);
+                gefaald) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
 
         queue.add(jsonObjectRequestZaadjes);
     }
@@ -183,6 +203,7 @@ public class APIManager {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Content-Type", "application/json; charset=utf-8");
+                params.put("Authorization", "Bearer " + accessToken);
                 return params;
             }
         };
@@ -218,9 +239,20 @@ public class APIManager {
                 Log.d("gefaald", error.toString());
 
             }
-        });
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
 
         queue.add(jsonObjectRequest);
 
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 }
