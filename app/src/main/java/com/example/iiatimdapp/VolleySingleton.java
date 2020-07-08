@@ -34,10 +34,8 @@ public class VolleySingleton {
     private static Context ctx;
     private AppDatabase appDatabase;
     final ArrayList<MoestuinMaten> moestuinMaten = new ArrayList<>();
-    public static ArrayList<Zaadjes> zaadjes = new ArrayList<>();
     public static ArrayList<Tips> tips = new ArrayList<>();
     public static ArrayList<Moestuin> moestuinen = new ArrayList<>();
-    Gson gson = new Gson();
 
     public VolleySingleton(Context context) {
         ctx = context;
@@ -68,114 +66,41 @@ public class VolleySingleton {
         getRequestQueue().add(req);
     }
 
-    public void getMoestuinMaten() {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://192.168.2.1:8000/api/moestuin_maten", null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    for (int i = 0; i < response.length(); i++) {
-                        String moestuinResponse = response.get(Integer.toString(i)).toString();
-
-                        MoestuinMaten moestuinMaat = gson.fromJson(moestuinResponse, MoestuinMaten.class);
-
-                        moestuinMaten.add(moestuinMaat);
-
-                        Log.d("maten", moestuinMaat.toString());
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("gefaald", error.toString());
-
-            }
-        });
-        addToRequestQueue(jsonObjectRequest);
-    }
+//    public void getMoestuinMaten() {
+//
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://192.168.2.1:8000/api/moestuin_maten", null, new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                try {
+//                    for (int i = 0; i < response.length(); i++) {
+//                        String moestuinResponse = response.get(Integer.toString(i)).toString();
+//
+//                        MoestuinMaten moestuinMaat = gson.fromJson(moestuinResponse, MoestuinMaten.class);
+//
+//                        moestuinMaten.add(moestuinMaat);
+//
+//                        Log.d("maten", moestuinMaat.toString());
+//                    }
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.d("gefaald", error.toString());
+//
+//            }
+//        });
+//        addToRequestQueue(jsonObjectRequest);
+//    }
 
     public ArrayList<MoestuinMaten> getMoestuinMatenArraylist() {
         return moestuinMaten;
     }
 
-    public ArrayList<Zaadjes> getZaadjes() {
-        JsonObjectRequest jsonObjectRequestZaadjes = new JsonObjectRequest(Request.Method.GET, "http://192.168.2.1:8000/api/zaadjes", null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    for (int i = 0; i < response.length(); i++) {
-                        String zaadjesResponse = response.get(Integer.toString(i)).toString();
-
-                        Zaadjes zaadje = gson.fromJson(zaadjesResponse, Zaadjes.class);
-
-                        zaadjes.add(zaadje);
-
-                        Log.d("zaadjes", zaadje.toString());
-                        Log.d("zaadjesarray", zaadjes.toString());
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("gefaald", error.toString());
-
-            }
-        });
-        addToRequestQueue(jsonObjectRequestZaadjes);
-        return zaadjes;
-    }
-
     public ArrayList<Tips> getTips(){
         return tips;
-    }
-
-    public void addMoestuinToDatabase(String naam_moestuin, int moestuin_maten) {
-        final JSONObject object = new JSONObject();
-        try {
-            object.put("naam", naam_moestuin);
-            object.put("moestuin_maten", moestuin_maten);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        JsonObjectRequest jsonObjectRequestMoestuin = new JsonObjectRequest(Request.Method.POST, "http://192.168.2.1:8000/api/moestuinen/add", object,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("response", response.toString());
-                        Log.d("object_response", object.toString());
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("response", error.toString());
-                Log.d("object_response", object.toString());
-
-                String body = "";
-                String statusCode = String.valueOf(error.networkResponse.statusCode);
-                if (error.networkResponse.data != null) {
-                    try {
-                        body = new String(error.networkResponse.data, "UTF-8");
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                }
-                Log.d("FAILURE22", body);
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Content-Type", "application/json; charset=utf-8");
-                return params;
-            }
-        };
-        addToRequestQueue(jsonObjectRequestMoestuin);
     }
 }
