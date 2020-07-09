@@ -1,10 +1,10 @@
 package com.example.iiatimdapp;
 
 import android.content.Context;
-import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.util.Log;
-
-import androidx.room.Room;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -13,8 +13,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.example.iiatimdapp.Room.GetTokenTask;
-import com.example.iiatimdapp.Room.HandleTokenTask;
 import com.example.iiatimdapp.Room.MoestuinMaten;
 import com.example.iiatimdapp.Room.Token;
 import com.example.iiatimdapp.Room.Zaadjes;
@@ -23,11 +21,15 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 public class APIManager {
 
@@ -45,7 +47,7 @@ public class APIManager {
     private APIManager(Context context) {
         this.baseUrl = "http://192.168.2.1:8000";
         this.clientID = "3";
-        this.clientSecret = "9P321wym35ny88vbi2ucBDx1FFbUQ94nRuxX6Cu7";
+        this.clientSecret = "oQz9P4s4IYcduzGgjMrRdO7X77QHlDj4tJCcZuYE";
         this.context = context;
         this.queue = VolleySingleton.getInstance(context).getRequestQueue();
     }
@@ -59,8 +61,6 @@ public class APIManager {
 
     private static APIManager create(final Context context) {
         APIManager api = new APIManager(context);
-        Thread tread = new Thread(new GetTokenTask(AppDatabase.getInstance(context), api));
-        tread.start();
         return api;
     }
 
@@ -295,4 +295,15 @@ public class APIManager {
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
+
+    public void deleteAccessToken() { this.accessToken = null; }
+
+    public boolean checkConnection() {
+        ConnectivityManager conMgr = (ConnectivityManager) this.context.getSystemService (Context.CONNECTIVITY_SERVICE);
+
+        return conMgr.getActiveNetworkInfo() != null
+                && conMgr.getActiveNetworkInfo().isAvailable()
+                && conMgr.getActiveNetworkInfo().isConnected();
+    }
+
 }

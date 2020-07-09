@@ -111,16 +111,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("gefaald", error.toString());
-                String body = "";
-
-                if (error.networkResponse.data != null) {
-                    try {
-                        body = new String(error.networkResponse.data, "UTF-8");
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                }
-                Log.d("FAILURE22", body);
             }
         });
         APIManager.getInstance(getActivity().getApplicationContext()).getTips(new Response.Listener<JSONObject>() {
@@ -146,16 +136,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("gefaald", error.toString());
-                String body = "";
-
-                if (error.networkResponse.data != null) {
-                    try {
-                        body = new String(error.networkResponse.data, "UTF-8");
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                }
-                Log.d("FAILURE22", body);
             }
         });
 

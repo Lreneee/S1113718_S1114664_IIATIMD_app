@@ -13,6 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import com.example.iiatimdapp.Room.Zaadjes;
 import com.squareup.picasso.Picasso;
 
@@ -31,14 +33,14 @@ public class ChooseSeedsAdapter extends RecyclerView.Adapter<ChooseSeedsAdapter.
 
     @NonNull
     @Override
-    public ChooseSeedsAdapter.SeedsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SeedsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.row_chooseseed_recyclerview, parent, false);
         return new ChooseSeedsAdapter.SeedsViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ChooseSeedsAdapter.SeedsViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SeedsViewHolder holder, int position) {
         holder.title_txt.setText(zaadjes.get(position).getName());
         holder.desc_txt.setText(zaadjes.get(position).getDescription());
         Picasso.get().load(zaadjes.get(position).getImg()).resize(100, 100).centerCrop().transform(new CircleTransform()).into(holder.image);
