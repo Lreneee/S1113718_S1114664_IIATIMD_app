@@ -3,14 +3,19 @@ package com.example.iiatimdapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+
+import androidx.cardview.widget.CardView;
 import androidx.gridlayout.widget.GridLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -38,7 +43,13 @@ public class DetailsMoestuinActivity extends AppCompatActivity {
     TextView naam, bedekking;
     ImageView image;
     GridLayout gridLayout;
+    int last_pos = -1;
 
+    private int[] moestuin_maat_1 = {R.id.imageView1, R.id.imageView2, R.id.imageView3, R.id.imageView4, R.id.imageView16, R.id.imageView15, R.id.imageView14, R.id.imageView13};
+    private int[] moestuin_maat_2 = {R.id.imageView1, R.id.imageView2, R.id.imageView3, R.id.imageView4};
+    private int[] moestuin_maat_3 = {R.id.imageView1, R.id.imageView2, R.id.imageView3, R.id.imageView4, R.id.imageView8, R.id.imageView12, R.id.imageView16};
+    private int[] moestuin_maat_4 = {R.id.imageView1, R.id.imageView2, R.id.imageView3, R.id.imageView4, R.id.imageView5, R.id.imageView6, R.id.imageView7, R.id.imageView8, R.id.imageView12, R.id.imageView16};
+    private int[] moestuin_maat_5 = {R.id.imageView1, R.id.imageView2, R.id.imageView3, R.id.imageView4, R.id.imageView5, R.id.imageView6, R.id.imageView7, R.id.imageView8, R.id.imageView11, R.id.imageView12, R.id.imageView15, R.id.imageView16};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +59,7 @@ public class DetailsMoestuinActivity extends AppCompatActivity {
         naam = findViewById(R.id.moestuinDetail_title);
         bedekking = findViewById(R.id.moestuinDetail_bedekking);
         gridLayout = (GridLayout) findViewById(R.id.moestuinAddLayout);
+        int childCount = gridLayout.getChildCount();
 
         final ImageView imageView = new ImageView(this);
         imageView.setImageResource(R.drawable.moestuin_add);
@@ -75,10 +87,35 @@ public class DetailsMoestuinActivity extends AppCompatActivity {
                                 Log.d("zaadjes", moestuin.toString());
                                 naam.setText(moestuin.getNaam());
                                 bedekking.setText("Bedekking: " + moestuin.getLengte_in_vakjes() + "/" + moestuin.getBreedte_in_vakjes());
-
-//                                GridLayoutManager.LayoutParams params = new GridLayoutManager.LayoutParams(moestuin.getLengte_in_vakjes(), moestuin.getBreedte_in_vakjes());
-//                                imageView.setLayoutParams(params);
-//                                gridLayout.addView(imageView);
+                                if(moestuin.getBreedte_in_vakjes() == 2 && moestuin.getLengte_in_vakjes() ==4){
+                                    for(int image : moestuin_maat_1){
+                                        ImageView myImg=(ImageView)findViewById(image);
+                                        myImg.setImageResource(0);
+                                    }
+                                } else if(moestuin.getBreedte_in_vakjes() == 3 && moestuin.getLengte_in_vakjes()==4){
+                                    for(int image : moestuin_maat_2){
+                                        ImageView myImg=(ImageView)findViewById(image);
+                                        myImg.setImageResource(0);
+                                    }
+                                }
+                                else if(moestuin.getBreedte_in_vakjes() == 3 && moestuin.getLengte_in_vakjes()==3){
+                                    for(int image : moestuin_maat_3){
+                                        ImageView myImg=(ImageView)findViewById(image);
+                                        myImg.setImageResource(0);
+                                    }
+                                } else if(moestuin.getBreedte_in_vakjes() == 2 && moestuin.getLengte_in_vakjes()==3){
+                                    for(int image : moestuin_maat_4){
+                                        ImageView myImg=(ImageView)findViewById(image);
+                                        myImg.setImageResource(0);
+                                    }
+                                }else if(moestuin.getBreedte_in_vakjes() == 2 && moestuin.getLengte_in_vakjes()==2){
+                                    for(int image : moestuin_maat_5){
+                                        ImageView myImg=(ImageView)findViewById(image);
+                                        myImg.setImageResource(0);
+                                    }
+                                } else{
+                                    return;
+                                }
                             }
 
                         } catch (JSONException e) {
@@ -90,7 +127,6 @@ public class DetailsMoestuinActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Log.d("response", error.toString());
                 Log.d("object_response", object.toString());
-
             }
         }) {
             @Override
@@ -102,6 +138,24 @@ public class DetailsMoestuinActivity extends AppCompatActivity {
         };
         queue.add(jsonObjectRequestMoestuin);
 
+        try {
+            for(int i=0; i<gridLayout.getChildCount(); i++){
+                ImageView layout = (ImageView) gridLayout.getChildAt(i);
+                final int finalI = i;
+                layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.d("ballba", Integer.toString(finalI));
+                        Intent seedIntent = new Intent(DetailsMoestuinActivity.this, ChooseSeedsActivity.class);
+                        startActivity(seedIntent);
+                    }
+                });
+            }
+        } catch (Exception e){
+            Log.d("dlswdlf", e.toString());
+        }
+
+
         Button btnCreateMoestuin = (Button) findViewById(R.id.btnAddSeeds);
         btnCreateMoestuin.setOnClickListener(new View.OnClickListener(){
 
@@ -111,5 +165,17 @@ public class DetailsMoestuinActivity extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
+    }
+    public void setSingleEvent(GridLayout gridLayout){
+        for(int i=0; i<gridLayout.getChildCount(); i++){
+            CardView layout = (CardView) gridLayout.getChildAt(i);
+            final int finalI = i;
+            layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("ballba", Integer.toString(finalI));
+                }
+            });
+        }
     }
 }

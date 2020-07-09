@@ -18,25 +18,4 @@
         app:layout_constraintStart_toStartOf="@+id/linearLayout"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_weight="1"
-        app:layout_constraintBottom_toBottomOf="@+id/searchSeeds_recyclerview"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <Button
-            android:id="@+id/btngotochoose"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@drawable/round"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="Kies dit zaadje"
-            android:textColor="#FFFFFF"
-            tools:layout_editor_absoluteX="27dp" />
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

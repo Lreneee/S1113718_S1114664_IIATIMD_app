@@ -43,44 +43,10 @@ public class SearchSeedsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchseeds);
 
-        APIManager.getInstance(this).getZaadjes( new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    for (int i = 0; i < response.length(); i++) {
-                        String zaadjesResponse = response.get(Integer.toString(i)).toString();
-
-                        Zaadjes zaadje = gson.fromJson(zaadjesResponse, Zaadjes.class);
-
-                        zaadjes.add(zaadje);
-
-                        Log.d("zaadjes", zaadje.toString());
-                        Log.d("zaadjesarray", zaadjes.toString());
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("gefaald", error.toString());
-
-            }
-        });
+        APIManager.getInstance(this).getZaadjes2();
 
         recyclerViewSeed = findViewById(R.id.searchSeeds_recyclerview);
 
 
-        Button btngotochoose = (Button) findViewById(R.id.btngotochoose);
-        btngotochoose.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick (View v){
-                Intent myIntent = new Intent(SearchSeedsActivity.this, ChooseSeedsActivity.class);
-                SearchSeedsActivity.this.startActivity(myIntent);
-            }
-        });
     }
 }
