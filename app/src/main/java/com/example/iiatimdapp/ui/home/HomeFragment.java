@@ -29,10 +29,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.iiatimdapp.APIManager;
+import com.example.iiatimdapp.AppDatabase;
 import com.example.iiatimdapp.CardAdapter;
 import com.example.iiatimdapp.DetailsMoestuinActivity;
 import com.example.iiatimdapp.MainActivity;
 import com.example.iiatimdapp.MakeMoestuinActivity;
+import com.example.iiatimdapp.Room.InsertMoestuinTask;
+import com.example.iiatimdapp.Room.InsertTipTask;
 import com.example.iiatimdapp.Room.Moestuin;
 import com.example.iiatimdapp.R;
 import com.example.iiatimdapp.Room.Tips;
@@ -87,6 +90,27 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.hasFixedSize();
 
+        recyclerViewAdapter = new TipsAdapter(tipsArray);
+        recyclerView.setAdapter(recyclerViewAdapter);
+
+
+
+//        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
+
 
         APIManager.getInstance(getActivity().getApplicationContext()).getAllMoestuinen(new Response.Listener<JSONObject>() {
             @Override
@@ -96,12 +120,17 @@ public class HomeFragment extends Fragment {
                         String moestuinResponse = response.get(Integer.toString(i)).toString();
 
                         Moestuin moestuin = gson.fromJson(moestuinResponse, Moestuin.class);
-
+                        new Thread(new InsertMoestuinTask(AppDatabase.getInstance(getContext()), moestuin)).start();
                         moestuinen.add(moestuin);
 
                         Log.d("zaadjes", moestuin.toString());
-                        adapter.notifyDataSetChanged();
                     }
+                    adapter = new CardAdapter(moestuinen, getActivity());
+                    viewPager = getView().findViewById(R.id.cardViewPager);
+                    viewPager.setAdapter(adapter);
+                    viewPager.setPadding(0, 0, 410, 0);
+                    viewPager.setBackgroundColor(getResources().getColor(R.color.lightGrey));
+                    adapter.notifyDataSetChanged();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -112,7 +141,19 @@ public class HomeFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 Log.d("gefaald", error.toString());
             }
+        }, getViewLifecycleOwner(), new Observer<List<Moestuin>>() {
+            @Override
+            public void onChanged(List<Moestuin> moestuins) {
+                ArrayList<Moestuin> moestuinen = new ArrayList<>(moestuins);
+                adapter = new CardAdapter(moestuinen, getActivity());
+                viewPager = getView().findViewById(R.id.cardViewPager);
+                viewPager.setAdapter(adapter);
+                viewPager.setPadding(0, 0, 410, 0);
+                viewPager.setBackgroundColor(getResources().getColor(R.color.lightGrey));
+                adapter.notifyDataSetChanged();
+            }
         });
+
         APIManager.getInstance(getActivity().getApplicationContext()).getTips(new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -120,7 +161,9 @@ public class HomeFragment extends Fragment {
                     for (int i = 0; i < response.length(); i++) {
                         String tipsResponse = response.get(Integer.toString(i)).toString();
 
+
                         Tips tips = gson.fromJson(tipsResponse, Tips.class);
+                        new Thread(new InsertTipTask(AppDatabase.getInstance(getContext()), tips)).start();
 
                         tipsArray.add(tips);
 
@@ -137,17 +180,20 @@ public class HomeFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 Log.d("gefaald", error.toString());
             }
+        }, getViewLifecycleOwner(), new Observer<List<Tips>>() {
+
+            @Override
+            public void onChanged(List<Tips> tips) {
+                for (int i = 0; i < tips.size(); i++) {
+
+                    tipsArray.add(tips.get(i));
+
+                    Log.d("tips", tips.toString());
+                    recyclerViewAdapter.notifyDataSetChanged();
+                }
+            }
         });
 
-        recyclerViewAdapter = new TipsAdapter(tipsArray);
-        recyclerView.setAdapter(recyclerViewAdapter);
-
-
-        adapter = new CardAdapter(moestuinen, getActivity());
-        viewPager = getView().findViewById(R.id.cardViewPager);
-        viewPager.setAdapter(adapter);
-        viewPager.setPadding(0, 0, 410, 0);
-        viewPager.setBackgroundColor(getResources().getColor(R.color.lightGrey));
 
 
         Button button = getView().findViewById(R.id.btnAdd);
@@ -157,22 +203,6 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), MakeMoestuinActivity.class);
                 startActivity(i);
-            }
-        });
-
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
             }
         });
 

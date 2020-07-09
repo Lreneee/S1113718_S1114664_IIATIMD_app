@@ -12,6 +12,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.iiatimdapp.Room.InsertZaadjesTask;
 import com.example.iiatimdapp.Room.MoestuinMaten;
 import com.example.iiatimdapp.Room.Zaadjes;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,12 +24,17 @@ import com.google.gson.Gson;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
     Gson gson = new Gson();
@@ -66,7 +72,8 @@ public class HomeActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        zaadjes = APIManager.getInstance(this).getZaadjes2();
+        zaadjes = APIManager.getInstance(this).getZaadjes2(this);
+
 
 //        Button btnAdd = (Button) findViewById(R.id.btnAdd);
 //

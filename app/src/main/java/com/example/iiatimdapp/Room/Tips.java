@@ -37,9 +37,7 @@ public class Tips {
     public String getLong_description(){
         return long_description;
     }
-    public String getImg(){
-        return getImg();
-    }
+    public String getImg(){ return this.img; }
     public String toString(){
         return id + " " + title + " " + short_description + " " + long_description;
     }
