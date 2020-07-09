@@ -1,6 +1,5 @@
 package com.example.iiatimdapp.Room;
 
-
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -11,14 +10,15 @@ import androidx.room.Query;
 import java.util.List;
 
 @Dao
-public interface ZaadjesDAO {
+public interface TipsDAO {
 
-    @Query("SELECT * FROM zaadjes")
-    LiveData<List<Zaadjes>> getAll();
+    @Query("SELECT * FROM tips")
+    LiveData<List<Tips>> getAll();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void InsertZaadjes(Zaadjes zaadjes);
+    void InsertTip(Tips tip);
 
     @Delete
-    void DeleteZaadjes(Zaadjes zaadjes);
+    void DeleteTip(Tips tip);
+
 }

@@ -43,7 +43,7 @@ public class SearchSeedsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchseeds);
 
-        APIManager.getInstance(this).getZaadjes2();
+        APIManager.getInstance(this).getZaadjes2(this);
 
         recyclerViewSeed = findViewById(R.id.searchSeeds_recyclerview);
 

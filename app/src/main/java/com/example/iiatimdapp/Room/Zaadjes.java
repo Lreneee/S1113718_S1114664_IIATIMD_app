@@ -26,7 +26,7 @@ public class Zaadjes {
         this.description = description;
     }
 
-    public int getId() {
+    public int getZaadjes_id() {
         return zaadjes_id;
     }
     public String getName() {
