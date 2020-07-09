@@ -7,6 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.iiatimdapp.Room.Zaadjes;
+
+import java.util.ArrayList;
+
 public class ChooseSeedsActivity extends AppCompatActivity {
 
     RecyclerView recyclerViewSeed;
@@ -33,7 +37,9 @@ public class ChooseSeedsActivity extends AppCompatActivity {
 
         recyclerViewSeed = findViewById(R.id.searchSeeds_recyclerview);
 
-        ChooseSeedsAdapter seedsAdapter = new ChooseSeedsAdapter(this, title, desc, images);
+        ArrayList<Zaadjes> zaadjes = HomeActivity.zaadjes;
+
+        ChooseSeedsAdapter seedsAdapter = new ChooseSeedsAdapter(zaadjes);
         recyclerViewSeed.setAdapter(seedsAdapter);
         recyclerViewSeed.setLayoutManager(new LinearLayoutManager(this));
 

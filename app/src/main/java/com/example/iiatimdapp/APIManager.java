@@ -45,7 +45,7 @@ public class APIManager {
     private APIManager(Context context) {
         this.baseUrl = "http://192.168.2.1:8000";
         this.clientID = "3";
-        this.clientSecret = "PskrZdqAQXU4Qpq8NyyKP5LUwFoZfy82tcKR4xuo";
+        this.clientSecret = "9P321wym35ny88vbi2ucBDx1FFbUQ94nRuxX6Cu7";
         this.context = context;
         this.queue = VolleySingleton.getInstance(context).getRequestQueue();
     }
@@ -132,7 +132,7 @@ public class APIManager {
         queue.add(stringRequest);
     }
     public ArrayList<Zaadjes> getZaadjes2() {
-        JsonObjectRequest jsonObjectRequestZaadjes = new JsonObjectRequest(Request.Method.GET, "http://192.168.2.1:8000/api/zaadjes", null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequestZaadjes = new JsonObjectRequest(Request.Method.GET, baseUrl+ "/api/zaadjes", null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -199,26 +199,6 @@ public class APIManager {
         };
 
         queue.add(jsonObjectRequestMoestuinen);
-    }
-
-    public void getZaadjes(Response.Listener<JSONObject> jsonObjectListener, Response.ErrorListener gefaald) {
-        String url = baseUrl + "/api/zaadjes";
-
-        JsonObjectRequest jsonObjectRequestZaadjes = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-                null,
-                jsonObjectListener,
-                gefaald) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + accessToken);
-                return headers;
-            }
-        };
-
-        queue.add(jsonObjectRequestZaadjes);
     }
 
     public void addMoestuinToDatabase(String naam_moestuin, int moestuin_maten) {
