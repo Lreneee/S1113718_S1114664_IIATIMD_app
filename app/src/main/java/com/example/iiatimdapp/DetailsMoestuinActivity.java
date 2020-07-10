@@ -49,7 +49,7 @@ public class DetailsMoestuinActivity extends AppCompatActivity {
     ImageView image;
     ImageView positionImage;
     GridLayout gridLayout;
-    String base_URL  = "http://192.168.1.112:8000";
+    String base_URL  = "http://192.168.2.1:8000";
 
     private int[] moestuin_maat_1 = {R.id.imageView1, R.id.imageView2, R.id.imageView3, R.id.imageView4, R.id.imageView16, R.id.imageView15, R.id.imageView14, R.id.imageView13};
     private int[] moestuin_maat_2 = {R.id.imageView1, R.id.imageView2, R.id.imageView3, R.id.imageView4};

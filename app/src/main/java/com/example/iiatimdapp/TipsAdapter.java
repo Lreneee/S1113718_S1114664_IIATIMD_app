@@ -52,7 +52,7 @@ public class TipsAdapter extends RecyclerView.Adapter<TipsAdapter.TipsViewHolder
     public void onBindViewHolder(@NonNull TipsViewHolder holder, int position) {
         holder.title_txt.setText(tips.get(position).getTitle());
         holder.desc_txt.setText(tips.get(position).getShort_description());
-//        Picasso.get().load(tips.get(position).getImg()).resize(100, 100).centerCrop().transform(new CircleTransform()).into(holder.image);
+        Picasso.get().load(tips.get(position).getImg()).transform(new CircleTransform()).into(holder.image);
     }
 
     @Override

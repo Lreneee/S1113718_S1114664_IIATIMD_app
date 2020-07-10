@@ -64,6 +64,7 @@ public class HomeFragment extends Fragment {
     Gson gson = new Gson();
     TextView title, desc;
     ImageView image;
+    boolean firstTime = true;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -151,7 +152,7 @@ public class HomeFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
-        
+
         APIManager.getInstance(getActivity().getApplicationContext()).getTips(new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -163,12 +164,14 @@ public class HomeFragment extends Fragment {
                         Tips tips = gson.fromJson(tipsResponse, Tips.class);
                         new Thread(new InsertTipTask(AppDatabase.getInstance(getContext()), tips)).start();
 
-                        tipsArray.add(tips);
-
+                        if(tipsArray.size() <2) {
+                            tipsArray.add(tips);
+                        } else{
+                            return;
+                        }
                         Log.d("tips", tips.toString());
                        recyclerViewAdapter.notifyDataSetChanged();
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
