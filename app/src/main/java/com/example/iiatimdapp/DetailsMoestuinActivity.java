@@ -56,6 +56,7 @@ public class DetailsMoestuinActivity extends AppCompatActivity {
     private int[] moestuin_maat_3 = {R.id.imageView1, R.id.imageView2, R.id.imageView3, R.id.imageView4, R.id.imageView8, R.id.imageView12, R.id.imageView16};
     private int[] moestuin_maat_4 = {R.id.imageView1, R.id.imageView2, R.id.imageView3, R.id.imageView4, R.id.imageView5, R.id.imageView6, R.id.imageView7, R.id.imageView8, R.id.imageView12, R.id.imageView16};
     private int[] moestuin_maat_5 = {R.id.imageView1, R.id.imageView2, R.id.imageView3, R.id.imageView4, R.id.imageView5, R.id.imageView6, R.id.imageView7, R.id.imageView8, R.id.imageView11, R.id.imageView12, R.id.imageView15, R.id.imageView16};
+    private int[] moestuin_maat_6 = {R.id.imageView1, R.id.imageView3, R.id.imageView4, R.id.imageView5, R.id.imageView6, R.id.imageView7, R.id.imageView8, R.id.imageView9, R.id.imageView10, R.id.imageView11, R.id.imageView12,R.id.imageView13, R.id.imageView14, R.id.imageView15, R.id.imageView16};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +124,14 @@ public class DetailsMoestuinActivity extends AppCompatActivity {
                                         ImageView myImg = (ImageView) findViewById(image);
                                         myImg.setImageResource(0);
                                     }
-                                } else {
+                                }else if(moestuin.getBreedte_in_vakjes() == 1 && moestuin.getLengte_in_vakjes() ==1 ){
+                                    for (int image : moestuin_maat_6) {
+                                        ImageView myImg = (ImageView) findViewById(image);
+                                        myImg.setImageResource(0);
+                                    }
+                                } else if(moestuin.getBreedte_in_vakjes() == 4 && moestuin.getLengte_in_vakjes()==4){
+                                   return;
+                                }else {
                                     return;
                                 }
                             }

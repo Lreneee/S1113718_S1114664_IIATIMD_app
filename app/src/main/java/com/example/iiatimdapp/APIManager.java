@@ -256,17 +256,6 @@ public class APIManager {
             public void onErrorResponse(VolleyError error) {
                 Log.d("response", error.toString());
                 Log.d("object_response", object.toString());
-
-                String body = "";
-                String statusCode = String.valueOf(error.networkResponse.statusCode);
-                if (error.networkResponse.data != null) {
-                    try {
-                        body = new String(error.networkResponse.data, "UTF-8");
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                }
-                Log.d("FAILURE22", body);
             }
         }) {
             @Override

@@ -24,6 +24,8 @@ import java.util.List;
 public class MakeMoestuinActivity  extends AppCompatActivity {
 
     String name;
+    String moestuin_maat;
+    int chosen_moestuin_maat;
     EditText nameInput;
     Spinner spinnerMoestuinMaten;
 
@@ -58,9 +60,12 @@ public class MakeMoestuinActivity  extends AppCompatActivity {
 
                 if(APIManager.getInstance(getApplicationContext()).checkConnection()){
                     name = nameInput.getText().toString();
+                    moestuin_maat = spinnerMoestuinMaten.getSelectedItem().toString();
+                    Log.d("sdfsdfsdfsdf", moestuin_maat);
+                    getMaat();
 
-                    APIManager.getInstance(getApplicationContext()).addMoestuinToDatabase(name, 2);
-                    Intent myIntent = new Intent(MakeMoestuinActivity.this, SearchSeedsActivity.class);
+                    APIManager.getInstance(getApplicationContext()).addMoestuinToDatabase(name, chosen_moestuin_maat);
+                    Intent myIntent = new Intent(MakeMoestuinActivity.this, HomeActivity.class);
                     MakeMoestuinActivity.this.startActivity(myIntent);
                 }else{
                     Toast toast = Toast.makeText(getApplicationContext(), R.string.offline_mode, Toast.LENGTH_LONG);
@@ -68,6 +73,25 @@ public class MakeMoestuinActivity  extends AppCompatActivity {
                 }
             }
         });
+    }
+    public void getMaat(){
+        if(moestuin_maat.equals("30 x 30 cm")){
+            chosen_moestuin_maat = 7;
+        }else if(moestuin_maat.equals("120 x 120 cm")){
+            chosen_moestuin_maat = 1;
+        } else if(moestuin_maat.equals("120 x 90 cm")){
+            chosen_moestuin_maat = 4;
+        } else if(moestuin_maat.equals("120 x 60 cm")){
+            chosen_moestuin_maat = 2;
+        } else if(moestuin_maat.equals("90 x 90 cm")){
+            chosen_moestuin_maat = 3;
+        } else if(moestuin_maat.equals("60 x 60 cm")){
+            chosen_moestuin_maat = 6;
+        } else if(moestuin_maat.equals("60 x 30 cm")){
+            chosen_moestuin_maat = 5;
+        } else {
+            chosen_moestuin_maat = 1;
+        }
     }
 
 

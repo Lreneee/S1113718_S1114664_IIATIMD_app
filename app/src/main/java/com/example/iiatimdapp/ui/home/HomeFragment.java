@@ -115,6 +115,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 try {
+                    moestuinen.clear();
                     for (int i = 0; i < response.length(); i++) {
                         String moestuinResponse = response.get(Integer.toString(i)).toString();
 
