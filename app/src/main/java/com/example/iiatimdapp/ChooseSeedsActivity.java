@@ -1,6 +1,7 @@
 package com.example.iiatimdapp;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,21 +15,8 @@ import java.util.ArrayList;
 public class ChooseSeedsActivity extends AppCompatActivity {
 
     RecyclerView recyclerViewSeed;
-
-    String title[], desc[];
-    int images[]= {
-            R.drawable.broccoli,
-            R.drawable.broccoli,
-            R.drawable.broccoli,
-            R.drawable.broccoli,
-            R.drawable.broccoli,
-            R.drawable.broccoli,
-            R.drawable.broccoli,
-    };
-
-
-
-
+    public String moestuin_id;
+    public String x;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +26,11 @@ public class ChooseSeedsActivity extends AppCompatActivity {
         recyclerViewSeed = findViewById(R.id.searchSeeds_recyclerview);
 
         ArrayList<Zaadjes> zaadjes = HomeActivity.zaadjes;
+        moestuin_id = getIntent().getStringExtra("moestuin_id");
+        x = getIntent().getStringExtra("x");
+        Log.d("moestuin", moestuin_id + " " +  x);
 
-        ChooseSeedsAdapter seedsAdapter = new ChooseSeedsAdapter(zaadjes);
+        ChooseSeedsAdapter seedsAdapter = new ChooseSeedsAdapter(zaadjes, moestuin_id, x);
         recyclerViewSeed.setAdapter(seedsAdapter);
         recyclerViewSeed.setLayoutManager(new LinearLayoutManager(this));
 

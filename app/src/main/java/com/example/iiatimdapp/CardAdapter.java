@@ -65,13 +65,10 @@ public class CardAdapter extends PagerAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<Moestuin> moestuinen = HomeFragment.moestuinen;
                 clickedItemCard = position + 1;
                 Intent i = new Intent(context, DetailsMoestuinActivity.class);
                 i.putExtra("clickedMoestuin", Integer.toString(clickedItemCard));
                 context.startActivity(i);
-                Log.d("couter", Integer.toString(clickedItemCard));
-                Log.i("TAG", "This page was clicked: " + position);
             }
         });
 

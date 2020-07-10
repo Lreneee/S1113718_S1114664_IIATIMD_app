@@ -25,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.iiatimdapp.Room.MoestuinDetails;
+import com.example.iiatimdapp.Room.ZaadjesToegevoegd;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -40,10 +41,11 @@ public class DetailsMoestuinActivity extends AppCompatActivity {
     private String clickedMoestuin;
     Gson gson = new Gson();
     private ArrayList<MoestuinDetails> moestuinDetails = new ArrayList<>();
+    private ArrayList<ZaadjesToegevoegd> zaadjesToegevoegdArray = new ArrayList<>();
     TextView naam, bedekking;
     ImageView image;
     GridLayout gridLayout;
-    int last_pos = -1;
+    String base_URL  = "http://192.168.2.1:8000";
 
     private int[] moestuin_maat_1 = {R.id.imageView1, R.id.imageView2, R.id.imageView3, R.id.imageView4, R.id.imageView16, R.id.imageView15, R.id.imageView14, R.id.imageView13};
     private int[] moestuin_maat_2 = {R.id.imageView1, R.id.imageView2, R.id.imageView3, R.id.imageView4};
@@ -73,7 +75,7 @@ public class DetailsMoestuinActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         RequestQueue queue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
-        JsonObjectRequest jsonObjectRequestMoestuin = new JsonObjectRequest(Request.Method.POST, "http://192.168.2.1:8000/api/moestuin/details", object,
+        JsonObjectRequest jsonObjectRequestMoestuin = new JsonObjectRequest(Request.Method.POST, base_URL + "/api/moestuin/details", object,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -138,6 +140,46 @@ public class DetailsMoestuinActivity extends AppCompatActivity {
         };
         queue.add(jsonObjectRequestMoestuin);
 
+        final JSONObject objectToegevoegd = new JSONObject();
+        try {
+            objectToegevoegd.put("moestuin_id", clickedMoestuin);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequestToegevoegd = new JsonObjectRequest(Request.Method.POST, base_URL + "/api/toegevoegde_zaadjes", object,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                Log.d("response", response.toString());
+                                String zaadjesToegevoegdResponse = response.get(Integer.toString(i)).toString();
+
+                               ZaadjesToegevoegd zaadjesToegevoegd = gson.fromJson(zaadjesToegevoegdResponse, ZaadjesToegevoegd.class);
+                                zaadjesToegevoegdArray.add(zaadjesToegevoegd);
+                                Log.d("zaadjes_toegevoegd", zaadjesToegevoegd.toString());
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("response", error.toString());
+                Log.d("object_response", object.toString());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json; charset=utf-8");
+                return params;
+            }
+        };
+        queue.add(jsonObjectRequestToegevoegd);
+
         try {
             for(int i=0; i<gridLayout.getChildCount(); i++){
                 ImageView layout = (ImageView) gridLayout.getChildAt(i);
@@ -147,6 +189,10 @@ public class DetailsMoestuinActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Log.d("ballba", Integer.toString(finalI));
                         Intent seedIntent = new Intent(DetailsMoestuinActivity.this, ChooseSeedsActivity.class);
+                        seedIntent.putExtra("x", Integer.toString(finalI));
+                        for(MoestuinDetails moestuinDetails : moestuinDetails){
+                            seedIntent.putExtra("moestuin_id", Integer.toString(moestuinDetails.getMoestuin_id()));
+                        }
                         startActivity(seedIntent);
                     }
                 });

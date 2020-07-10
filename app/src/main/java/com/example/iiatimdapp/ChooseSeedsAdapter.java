@@ -2,6 +2,7 @@ package com.example.iiatimdapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.iiatimdapp.ui.home.HomeFragment;
 import com.squareup.picasso.Picasso;
 
 import com.example.iiatimdapp.Room.Zaadjes;
@@ -26,9 +28,14 @@ public class ChooseSeedsAdapter extends RecyclerView.Adapter<ChooseSeedsAdapter.
     int data_img[];
     private ArrayList<Zaadjes> zaadjes = new ArrayList<>();
     Context context;
+    String moestuin_id;
+    String x;
 
-    public ChooseSeedsAdapter(ArrayList<Zaadjes> zaadjes) {
+
+    public ChooseSeedsAdapter(ArrayList<Zaadjes> zaadjes, String moestuin_id, String x) {
         this.zaadjes = zaadjes;
+        this.moestuin_id = moestuin_id;
+        this.x = x;
     }
 
     @NonNull
@@ -71,9 +78,16 @@ public class ChooseSeedsAdapter extends RecyclerView.Adapter<ChooseSeedsAdapter.
                 @Override
                 public void onClick(View v) {
                     Context context = v.getContext();
-                    Intent myIntent = new Intent(context, SearchSeedsActivity.class);
+                    Intent myIntent = new Intent(context, HomeActivity.class);
                     context.startActivity(myIntent);
 
+                }
+            });
+            buttonadd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition() + 1;
+                    APIManager.getInstance(context).postZaadjeMoestuin(Integer.parseInt(moestuin_id), position, Integer.parseInt(x));
                 }
             });
 

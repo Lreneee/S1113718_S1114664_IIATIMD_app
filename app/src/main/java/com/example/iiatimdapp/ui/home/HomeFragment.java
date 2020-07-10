@@ -178,7 +178,7 @@ public class HomeFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("gefaald", error.toString());
+                Log.d("gefaaaaaald", error.toString());
             }
         }, getViewLifecycleOwner(), new Observer<List<Tips>>() {
 
