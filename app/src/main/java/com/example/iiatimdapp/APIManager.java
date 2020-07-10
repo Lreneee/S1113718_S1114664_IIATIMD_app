@@ -2,9 +2,10 @@ package com.example.iiatimdapp;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.util.Log;
+
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -13,22 +14,20 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.example.iiatimdapp.Room.InsertZaadjesTask;
+import com.example.iiatimdapp.Room.Moestuin;
 import com.example.iiatimdapp.Room.MoestuinMaten;
-import com.example.iiatimdapp.Room.Token;
+import com.example.iiatimdapp.Room.Tips;
 import com.example.iiatimdapp.Room.Zaadjes;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.InetAddress;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class APIManager {
@@ -45,7 +44,7 @@ public class APIManager {
 
 
     private APIManager(Context context) {
-        this.baseUrl = "http://192.168.2.1:8000";
+        this.baseUrl = "http://192.168.1.112:8000";
         this.clientID = "3";
         this.clientSecret = "L1VSzJb6mCzCzYxWlkwQITQIhb6gFv7fSWj4zEAn";
         this.context = context;
@@ -131,74 +130,105 @@ public class APIManager {
 
         queue.add(stringRequest);
     }
-    public ArrayList<Zaadjes> getZaadjes2() {
-        JsonObjectRequest jsonObjectRequestZaadjes = new JsonObjectRequest(Request.Method.GET, baseUrl+ "/api/zaadjes", null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    for (int i = 0; i < response.length(); i++) {
-                        String zaadjesResponse = response.get(Integer.toString(i)).toString();
+    public ArrayList<Zaadjes> getZaadjes2(LifecycleOwner viewLifecycleOwner) {
 
-                        Zaadjes zaadje = gson.fromJson(zaadjesResponse, Zaadjes.class);
+        if (checkConnection()) {
 
-                        zaadjes.add(zaadje);
+            String url = baseUrl + "/api/zaadjes";
 
-                        Log.d("zaadjes", zaadje.toString());
-                        Log.d("zaadjesarray", zaadjes.toString());
+            JsonObjectRequest jsonObjectRequestZaadjes = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        for (int i = 0; i < response.length(); i++) {
+                            String zaadjesResponse = response.get(Integer.toString(i)).toString();
+
+                            Zaadjes zaadje = gson.fromJson(zaadjesResponse, Zaadjes.class);
+
+                            new Thread(new InsertZaadjesTask(AppDatabase.getInstance(context), zaadje)).start();
+
+                            zaadjes.add(zaadje);
+
+                            Log.d("zaadjes", zaadje.toString());
+                            Log.d("zaadjesarray", zaadjes.toString());
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("gefaald", error.toString());
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("gefaald", error.toString());
 
-            }
-        });
-       queue.add(jsonObjectRequestZaadjes);
+                }
+            });
+            queue.add(jsonObjectRequestZaadjes);
+        } else {
+            AppDatabase.getInstance(this.context).zaadjesDAO().getAll().observe(viewLifecycleOwner, new Observer<List<Zaadjes>>() {
+
+                @Override
+                public void onChanged(List<Zaadjes> z) {
+                    zaadjes.addAll(z);
+                }
+            });
+        }
         return zaadjes;
     }
 
-    public void getAllMoestuinen(Response.Listener<JSONObject> zaadjes, Response.ErrorListener errorListener) {
-        String url = baseUrl + "/api/moestuinen";
+    public void getAllMoestuinen(Response.Listener<JSONObject> zaadjes, Response.ErrorListener errorListener, LifecycleOwner viewLifecycleOwner, Observer<List<Moestuin>> observer) {
+        if(checkConnection()){
+            String url = baseUrl + "/api/moestuinen";
 
-        JsonObjectRequest jsonObjectRequestMoestuinen = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-                null,
-                zaadjes,
-                errorListener) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + accessToken);
-                return headers;
-            }
-        };
+            JsonObjectRequest jsonObjectRequestMoestuinen = new JsonObjectRequest(
+                    Request.Method.GET,
+                    url,
+                    null,
+                    zaadjes,
+                    errorListener) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + accessToken);
+                    return headers;
+                }
+            };
 
-        queue.add(jsonObjectRequestMoestuinen);
+            queue.add(jsonObjectRequestMoestuinen);
+        } else {
+
+            AppDatabase.getInstance(this.context).moestuinDAO().getAll().observe(viewLifecycleOwner, observer);
+
+        }
     }
-    public void getTips(Response.Listener<JSONObject> zaadjes, Response.ErrorListener errorListener) {
-        String url = baseUrl + "/api/tips";
+    public void getTips(Response.Listener<JSONObject> zaadjes, Response.ErrorListener errorListener, LifecycleOwner viewLifecycleOwner, Observer<List<Tips>> observer) {
 
-        JsonObjectRequest jsonObjectRequestMoestuinen = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-                null,
-                zaadjes,
-                errorListener) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + accessToken);
-                return headers;
-            }
-        };
+        if (checkConnection()) {
 
-        queue.add(jsonObjectRequestMoestuinen);
+            String url = baseUrl + "/api/tips";
+
+            JsonObjectRequest jsonObjectRequestMoestuinen = new JsonObjectRequest(
+                    Request.Method.GET,
+                    url,
+                    null,
+                    zaadjes,
+                    errorListener) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + accessToken);
+                    return headers;
+                }
+            };
+
+            queue.add(jsonObjectRequestMoestuinen);
+
+        } else {
+
+            AppDatabase.getInstance(this.context).tipsDAO().getAll().observe(viewLifecycleOwner, observer);
+
+        }
     }
 
     public void addMoestuinToDatabase(String naam_moestuin, int moestuin_maten) {
