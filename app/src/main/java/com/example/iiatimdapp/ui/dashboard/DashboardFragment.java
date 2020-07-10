@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +18,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.iiatimdapp.APIManager;
 import com.example.iiatimdapp.ChooseSeedsActivity;
 import com.example.iiatimdapp.HomeActivity;
 import com.example.iiatimdapp.MainActivity;
@@ -53,6 +55,11 @@ public class DashboardFragment extends Fragment {
        Log.d("zaad", zaadjes.toString());
         recyclerViewAdapter = new SearchSeedsAdapter(zaadjes);
         recyclerView.setAdapter(recyclerViewAdapter);
+
+        if(!APIManager.getInstance(getContext()).checkConnection()){
+            Toast toast = Toast.makeText(getContext(), R.string.offline_mode, Toast.LENGTH_LONG);
+            toast.show();
+        }
 
         return root;
     }

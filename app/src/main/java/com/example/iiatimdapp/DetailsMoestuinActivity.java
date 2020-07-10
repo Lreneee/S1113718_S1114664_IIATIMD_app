@@ -26,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.iiatimdapp.Room.MoestuinDetails;
 import com.example.iiatimdapp.Room.ZaadjesToegevoegd;
+import com.example.iiatimdapp.ui.dashboard.DashboardFragment;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -207,7 +208,7 @@ public class DetailsMoestuinActivity extends AppCompatActivity {
 
             @Override
             public void onClick (View v){
-                Intent myIntent = new Intent(DetailsMoestuinActivity.this, HomeActivity.class);
+                Intent myIntent = new Intent(DetailsMoestuinActivity.this, SearchSeedsActivity.class);
                 startActivity(myIntent);
             }
         });

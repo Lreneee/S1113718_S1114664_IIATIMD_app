@@ -46,7 +46,7 @@ public class APIManager {
     private APIManager(Context context) {
         this.baseUrl = "http://192.168.1.112:8000";
         this.clientID = "3";
-        this.clientSecret = "L1VSzJb6mCzCzYxWlkwQITQIhb6gFv7fSWj4zEAn";
+        this.clientSecret = "ItSPFXMev9nzWYy40MiIY9LeHqB8P2OLqO3mex31";
         this.context = context;
         this.queue = VolleySingleton.getInstance(context).getRequestQueue();
     }

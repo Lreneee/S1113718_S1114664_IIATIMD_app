@@ -1,18 +1,23 @@
 package com.example.iiatimdapp;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.iiatimdapp.Room.Zaadjes;
+import com.example.iiatimdapp.ui.dashboard.DashboardFragment;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -46,6 +51,12 @@ public class SearchSeedsActivity extends AppCompatActivity {
         APIManager.getInstance(this).getZaadjes2(this);
 
         recyclerViewSeed = findViewById(R.id.searchSeeds_recyclerview);
+
+        Fragment dashboardFragment = new DashboardFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.search_seeds_fragment_container, dashboardFragment)
+                .commit();
 
 
     }

@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -72,22 +73,27 @@ public class ChooseSeedsAdapter extends RecyclerView.Adapter<ChooseSeedsAdapter.
             desc_txt = itemView.findViewById(R.id.seed_desc_txt);
             image = itemView.findViewById(R.id.search_seed_img);
             buttonadd = itemView.findViewById(R.id.buttonadd);
-            buttoninfo = itemView.findViewById(R.id.buttoninfo);
+//            buttoninfo = itemView.findViewById(R.id.buttoninfo);
 
-            buttoninfo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Context context = v.getContext();
-                    Intent myIntent = new Intent(context, HomeActivity.class);
-                    context.startActivity(myIntent);
-
-                }
-            });
+//            buttoninfo.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Context context = v.getContext();
+//                    Intent myIntent = new Intent(context, HomeActivity.class);
+//                    context.startActivity(myIntent);
+//
+//                }
+//            });
             buttonadd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = getAdapterPosition() + 1;
-                    APIManager.getInstance(context).postZaadjeMoestuin(Integer.parseInt(moestuin_id), position, Integer.parseInt(x));
+                    if(APIManager.getInstance(context).checkConnection()){
+                        int position = getAdapterPosition() + 1;
+                        APIManager.getInstance(context).postZaadjeMoestuin(Integer.parseInt(moestuin_id), position, Integer.parseInt(x));
+                    }else{
+                        Toast toast = Toast.makeText(v.getContext(), R.string.offline_mode, Toast.LENGTH_LONG);
+                        toast.show();
+                    }
                 }
             });
 
