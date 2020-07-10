@@ -43,7 +43,7 @@ public class TipsAdapter extends RecyclerView.Adapter<TipsAdapter.TipsViewHolder
     @NonNull
     @Override
     public TipsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = (ConstraintLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.tips_recyclerview, parent, false);
+        View v = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.tips_recyclerview, parent, false);
         TipsViewHolder seedsViewHolder = new TipsViewHolder(v);
         return seedsViewHolder;
     }

@@ -92,6 +92,7 @@ public class HomeFragment extends Fragment {
 
         recyclerViewAdapter = new TipsAdapter(tipsArray);
         recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerView.setNestedScrollingEnabled(false);
 //        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 //            @Override
 //            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -150,7 +151,7 @@ public class HomeFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
-
+        
         APIManager.getInstance(getActivity().getApplicationContext()).getTips(new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
