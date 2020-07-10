@@ -29,31 +29,34 @@ public class MessagingService extends FirebaseMessagingService {
     }
 
     private void sendRegistrationToServer(String token) {
-        StringBuilder sbParams = new StringBuilder();
-        try{
-            String url = "http://192.168.1.112:8000/api/token";
-            URL urlObj = new URL(url);
-            HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
-            conn.setDoOutput(true);
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Accept-Charset", "UTF-8");
 
-            conn.setReadTimeout(10000);
-            conn.setConnectTimeout(15000);
+        APIManager.getInstance(getApplicationContext()).postMessagingToken(token);
 
-            conn.connect();
-
-            sbParams.append("token").append("=").append(token);
-
-            String paramsString = sbParams.toString();
-
-            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-            wr.writeBytes(paramsString);
-            wr.flush();
-            wr.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        StringBuilder sbParams = new StringBuilder();
+//        try{
+//            String url = "http://192.168.1.112:8000/api/token";
+//            URL urlObj = new URL(url);
+//            HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
+//            conn.setDoOutput(true);
+//            conn.setRequestMethod("POST");
+//            conn.setRequestProperty("Accept-Charset", "UTF-8");
+//
+//            conn.setReadTimeout(10000);
+//            conn.setConnectTimeout(15000);
+//
+//            conn.connect();
+//
+//            sbParams.append("token").append("=").append(token);
+//
+//            String paramsString = sbParams.toString();
+//
+//            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+//            wr.writeBytes(paramsString);
+//            wr.flush();
+//            wr.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
     }
 

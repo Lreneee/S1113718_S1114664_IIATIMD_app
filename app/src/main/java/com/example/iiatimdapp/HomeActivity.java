@@ -56,6 +56,8 @@ public class HomeActivity extends AppCompatActivity {
                         // Get new Instance ID token
                         String token = task.getResult().getToken();
 
+                        APIManager.getInstance(getApplicationContext()).postMessagingToken(token);
+
                         // Log and toast
                         Log.d("MainActivity", token);
                     }

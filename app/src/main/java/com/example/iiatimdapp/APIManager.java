@@ -364,4 +364,41 @@ public class APIManager {
     }
 
 
+    public void postMessagingToken(String token) {
+        String url = baseUrl + "/api/fcm-token";
+
+        final JSONObject object = new JSONObject();
+        try {
+            object.put("token", token);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequestMessagingToken = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                object,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("response", response.toString());
+                        Log.d("object_response", object.toString());
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("response", error.toString());
+                Log.d("object_response", object.toString());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json; charset=utf-8");
+                params.put("Authorization", "Bearer " + accessToken);
+                return params;
+            }
+        };
+        queue.add(jsonObjectRequestMessagingToken);
+    }
 }
