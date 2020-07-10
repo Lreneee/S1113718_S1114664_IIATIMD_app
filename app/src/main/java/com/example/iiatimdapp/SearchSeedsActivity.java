@@ -27,7 +27,6 @@ import java.util.ArrayList;
 
 public class SearchSeedsActivity extends AppCompatActivity {
 
-    RecyclerView recyclerViewSeed;
     public static ArrayList<Zaadjes> zaadjes = new ArrayList<>();
     private Gson gson = new Gson();
 
@@ -50,9 +49,13 @@ public class SearchSeedsActivity extends AppCompatActivity {
 
         APIManager.getInstance(this).getZaadjes2(this);
 
-        recyclerViewSeed = findViewById(R.id.searchSeeds_recyclerview);
+        zaadjes = HomeActivity.zaadjes;
 
-        Fragment dashboardFragment = new DashboardFragment();
+        SearchSeedsAdapter adapter = new SearchSeedsAdapter(zaadjes);
+
+        DashboardFragment dashboardFragment = new DashboardFragment();
+        dashboardFragment.setSeedsAdapter(adapter);
+
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.search_seeds_fragment_container, dashboardFragment)

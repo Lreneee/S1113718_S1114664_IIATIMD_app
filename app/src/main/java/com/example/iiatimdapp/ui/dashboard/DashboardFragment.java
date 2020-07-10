@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,11 @@ public class DashboardFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter recyclerViewAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    private RecyclerView.Adapter adapter;
+
+    public void setSeedsAdapter(RecyclerView.Adapter adapter) {
+        this.adapter = adapter;
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -52,9 +58,11 @@ public class DashboardFragment extends Fragment {
 
         ArrayList<Zaadjes> zaadjes = HomeActivity.zaadjes;
 
-       Log.d("zaad", zaadjes.toString());
-        recyclerViewAdapter = new SearchSeedsAdapter(zaadjes);
-        recyclerView.setAdapter(recyclerViewAdapter);
+        Log.d("zaad", zaadjes.toString());
+        if (this.adapter == null) {
+            this.adapter = new SearchSeedsAdapter(zaadjes);
+        }
+        recyclerView.setAdapter(this.adapter);
 
         if(!APIManager.getInstance(getContext()).checkConnection()){
             Toast toast = Toast.makeText(getContext(), R.string.offline_mode, Toast.LENGTH_LONG);
