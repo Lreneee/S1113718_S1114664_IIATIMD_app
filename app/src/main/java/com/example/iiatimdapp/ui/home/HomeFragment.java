@@ -92,9 +92,6 @@ public class HomeFragment extends Fragment {
 
         recyclerViewAdapter = new TipsAdapter(tipsArray);
         recyclerView.setAdapter(recyclerViewAdapter);
-
-
-
 //        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 //            @Override
 //            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
