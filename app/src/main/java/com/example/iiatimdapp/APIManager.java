@@ -44,7 +44,7 @@ public class APIManager {
 
 
     private APIManager(Context context) {
-        this.baseUrl = "http://192.168.2.1:8000";
+        this.baseUrl = "http://192.168.1.112:8000";
         this.clientID = "3";
         this.clientSecret = "sIuoVfrSGV2uZqseUr9jsLtlTY8oeKAn2YuRQGvI";
         this.context = context;

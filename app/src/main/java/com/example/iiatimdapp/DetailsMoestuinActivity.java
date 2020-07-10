@@ -27,6 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.iiatimdapp.Room.MoestuinDetails;
 import com.example.iiatimdapp.Room.ZaadjesToegevoegd;
+import com.example.iiatimdapp.ui.dashboard.DashboardFragment;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -48,7 +49,7 @@ public class DetailsMoestuinActivity extends AppCompatActivity {
     ImageView image;
     ImageView positionImage;
     GridLayout gridLayout;
-    String base_URL = "http://192.168.2.1:8000";
+    String base_URL  = "http://192.168.1.112:8000";
 
     private int[] moestuin_maat_1 = {R.id.imageView1, R.id.imageView2, R.id.imageView3, R.id.imageView4, R.id.imageView16, R.id.imageView15, R.id.imageView14, R.id.imageView13};
     private int[] moestuin_maat_2 = {R.id.imageView1, R.id.imageView2, R.id.imageView3, R.id.imageView4};
@@ -227,8 +228,8 @@ public class DetailsMoestuinActivity extends AppCompatActivity {
         btnCreateMoestuin.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(DetailsMoestuinActivity.this, HomeActivity.class);
+            public void onClick (View v){
+                Intent myIntent = new Intent(DetailsMoestuinActivity.this, SearchSeedsActivity.class);
                 startActivity(myIntent);
             }
         });

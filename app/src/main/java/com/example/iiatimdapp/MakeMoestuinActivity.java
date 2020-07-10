@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.iiatimdapp.Room.MoestuinMaten;
@@ -53,11 +55,17 @@ public class MakeMoestuinActivity  extends AppCompatActivity {
 
             @Override
             public void onClick (View v){
-                name = nameInput.getText().toString();
 
-                APIManager.getInstance(getApplicationContext()).addMoestuinToDatabase(name, 2);
-                Intent myIntent = new Intent(MakeMoestuinActivity.this, SearchSeedsActivity.class);
-                MakeMoestuinActivity.this.startActivity(myIntent);
+                if(APIManager.getInstance(getApplicationContext()).checkConnection()){
+                    name = nameInput.getText().toString();
+
+                    APIManager.getInstance(getApplicationContext()).addMoestuinToDatabase(name, 2);
+                    Intent myIntent = new Intent(MakeMoestuinActivity.this, SearchSeedsActivity.class);
+                    MakeMoestuinActivity.this.startActivity(myIntent);
+                }else{
+                    Toast toast = Toast.makeText(getApplicationContext(), R.string.offline_mode, Toast.LENGTH_LONG);
+                    toast.show();
+                }
             }
         });
     }

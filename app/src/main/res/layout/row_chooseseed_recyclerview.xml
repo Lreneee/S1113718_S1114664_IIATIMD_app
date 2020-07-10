@@ -73,21 +73,21 @@
                 app:layout_constraintTop_toBottomOf="@+id/seed_desc_txt"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <Button
-                android:id="@+id/buttoninfo"
-                android:layout_width="92dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:background="@drawable/round_brown"
-                android:text="meer info"
-                android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/buttonadd"
-                app:layout_constraintTop_toBottomOf="@+id/seed_desc_txt"
-                app:layout_constraintVertical_bias="0.227" />
+<!--            <Button-->
+<!--                android:id="@+id/buttoninfo"-->
+<!--                android:layout_width="92dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:layout_marginStart="16dp"-->
+<!--                android:layout_marginLeft="16dp"-->
+<!--                android:background="@drawable/round_brown"-->
+<!--                android:text="meer info"-->
+<!--                android:textColor="#FFFFFF"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.0"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/buttonadd"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/seed_desc_txt"-->
+<!--                app:layout_constraintVertical_bias="0.227" />-->
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
