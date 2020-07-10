@@ -11,4 +11,5 @@
     <string name="bedekking_moestuin"><b>Bedekking 5/9</b></string>
     <string name="moestuin_making"><b>Maak je eigen moestuin aan</b></string>
     <string name="moestuin_login"><b>Welkom bij de moestuin app</b></string>
+    <string name="offline_mode">U zit nu in de offline mode. Om dit te kunnen doen moet u internet hebben</string>
 </resources>
