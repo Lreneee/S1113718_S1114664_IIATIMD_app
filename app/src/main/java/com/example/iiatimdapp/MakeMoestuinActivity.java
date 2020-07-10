@@ -55,7 +55,7 @@ public class MakeMoestuinActivity  extends AppCompatActivity {
             public void onClick (View v){
                 name = nameInput.getText().toString();
 
-                APIManager.getInstance(getApplicationContext()).addMoestuinToDatabase(name, 1);
+                APIManager.getInstance(getApplicationContext()).addMoestuinToDatabase(name, 2);
                 Intent myIntent = new Intent(MakeMoestuinActivity.this, SearchSeedsActivity.class);
                 MakeMoestuinActivity.this.startActivity(myIntent);
             }

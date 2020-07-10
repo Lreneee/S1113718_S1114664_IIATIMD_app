@@ -47,7 +47,7 @@ public class APIManager {
     private APIManager(Context context) {
         this.baseUrl = "http://192.168.2.1:8000";
         this.clientID = "3";
-        this.clientSecret = "oQz9P4s4IYcduzGgjMrRdO7X77QHlDj4tJCcZuYE";
+        this.clientSecret = "L1VSzJb6mCzCzYxWlkwQITQIhb6gFv7fSWj4zEAn";
         this.context = context;
         this.queue = VolleySingleton.getInstance(context).getRequestQueue();
     }
@@ -291,6 +291,44 @@ public class APIManager {
         queue.add(jsonObjectRequest);
 
     }
+    public void postZaadjeMoestuin(int moestuin_id, int zaadjes_id, int x) {
+        String url = baseUrl + "/api/zaadje_moestuin";
+
+        final JSONObject object = new JSONObject();
+        try {
+            object.put("moestuin_id", moestuin_id);
+            object.put("zaadjes_id", zaadjes_id);
+            object.put("x", x);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequestMoestuinZaadje = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                object,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("response", response.toString());
+                        Log.d("object_response", object.toString());
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("response", error.toString());
+                Log.d("object_response", object.toString());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json; charset=utf-8");
+                params.put("Authorization", "Bearer " + accessToken);
+                return params;
+            }
+        };
+        queue.add(jsonObjectRequestMoestuinZaadje);
+    }
 
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
@@ -305,5 +343,6 @@ public class APIManager {
                 && conMgr.getActiveNetworkInfo().isAvailable()
                 && conMgr.getActiveNetworkInfo().isConnected();
     }
+
 
 }
