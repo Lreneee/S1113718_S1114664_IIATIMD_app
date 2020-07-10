@@ -88,16 +88,16 @@ public class ChooseSeedsAdapter extends RecyclerView.Adapter<ChooseSeedsAdapter.
                 @Override
                 public void onClick(View v) {
                     Context context = v.getContext();
-//                    if(APIManager.getInstance(context).checkConnection()){
+                    if(APIManager.getInstance(context).checkConnection()){
                         int position = getAdapterPosition() + 1;
                         APIManager.getInstance(context).postZaadjeMoestuin(Integer.parseInt(moestuin_id), position, Integer.parseInt(x));
                         Intent seedAdd = new Intent(context, DetailsMoestuinActivity.class);
                         seedAdd.putExtra("moestuin_id", moestuin_id);
                         context.startActivity(seedAdd);
-//                    }else{
-//                        Toast toast = Toast.makeText(v.getContext(), R.string.offline_mode, Toast.LENGTH_LONG);
-//                        toast.show();
-//                    }
+                    }else{
+                        Toast toast = Toast.makeText(v.getContext(), R.string.offline_mode, Toast.LENGTH_LONG);
+                        toast.show();
+                    }
                 }
             });
 
